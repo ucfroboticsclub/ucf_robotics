@@ -1,0 +1,9 @@
+#folders to ignore
+build/
+bin/
+devel/
+lib/
+msg_gen/
+srv_gen/
+
+CMakeLists.txt.user
