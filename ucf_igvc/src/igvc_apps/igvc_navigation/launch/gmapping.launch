@@ -1,10 +1,10 @@
 <launch>
 
-  <include file="$(find core_bring)/launch/hokuyo.launch" >
+  <include file="$(find core_bringup)/launch/hokuyo.launch" >
     <arg name="scan_topic" default="/scan">
   </include>
 
   <include file="$(find igvc_navigation)/launch/includes/gmapping.launch.xml"/>
-  <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml" />
+  <include file="$(find igvc_navigation)/launch/includes/move_base.launch.xml" />
 
 </launch>
