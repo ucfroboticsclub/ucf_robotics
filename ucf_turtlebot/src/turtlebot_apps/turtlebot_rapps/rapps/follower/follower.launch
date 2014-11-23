@@ -1,0 +1,6 @@
+<!--
+  The turtlebot people (or whatever) follower nodelet.   
+ -->
+<launch>
+  <include file="$(find turtlebot_follower)/launch/follower.launch"/>
+</launch>
