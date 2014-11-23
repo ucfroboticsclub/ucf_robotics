@@ -40,8 +40,9 @@
     </gazebo>
   </xacro:macro>
 
-  <xacro:macro name="hokuyo_laser">
-    <gazebo reference="laser">
+  <!-- Hokuyo LIDAR for simulation -->
+  <xacro:macro name="hokuyo_laser" >
+    <gazebo reference="base_laser_link">
       <sensor type="ray" name="laser">
         <pose>0 0 0 0 0 0</pose>
         <visualize>false</visualize>
@@ -68,7 +69,7 @@
         </ray>
         <plugin name="hokuyo_node" filename="libgazebo_ros_laser.so">
           <topicName>/scan</topicName>
-          <frameName>laser</frameName>
+          <frameName>base_laser_link</frameName>
         </plugin>
       </sensor>
     </gazebo>

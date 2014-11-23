@@ -91,7 +91,6 @@ public:
     // Do a radius instead of a box.
     if (sqrt(scan_pt.point.x*scan_pt.point.x + scan_pt.point.y*scan_pt.point.y) > inscribed_radius_)
       return false;
-
     return true;
   }
 
