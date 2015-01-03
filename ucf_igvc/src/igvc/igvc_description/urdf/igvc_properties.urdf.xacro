@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<!-- Mathematical constants -->
+	<property name="M_PI" value="3.14159"/>
+	<!-- Chassis properties -->
+
+	<!-- Wheel properties -->
+	<property name="wheel_mass" value="5"/>
+	<property name="wheel_width" value="0.02"/>
+	<property name="wheel_radius" value="0.02"/>
+	<property name="wheel_ixx" value="${(wheel_mass*(3*wheel_radius*wheel_radius + wheel_width*wheel_width))/12}"/>
+	<property name="wheel_iyy" value="${(wheel_mass*(3*wheel_radius*wheel_radius + wheel_width*wheel_width))/12}"/>
+	<property name="wheel_izz" value="${(wheel_mass*wheel_radius*wheel_radius)/2}"/>
+	<property name="wheel_x_pos" value="0"/>
+	<property name="wheel_y_pos" value="0.1"/>
+	<property name="wheel_z_pos" value="-0.1"/>
+	<!-- Caster properties -->
+
+	<!-- Camera properties -->
+
+	<!-- LIDAR properties -->
+</robot>

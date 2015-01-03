@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<!-- Include IGVC vehicle properties -->
+	<xacro:include filename="$(find igvc_description)/urdf/igvc_properties.urdf.xacro"/>
+	<xacro:include filename="$(find igvc_description)/urdf/igvc_materials.urdf.xacro"/>
+
+	<!-- Macro providing complete description of a wheel, joint, and motor -->
+	<!-- A differential drive is assumed here. -->
+	<!-- All non-param variables can be found defined in igvc_properties.urdf.xacro -->
+	<xacro:macro name="igvc_wheel" params="parent lr reflectY">
+
+		<!-- Wheel link description -->
+		<link name="${lr}_wheel">
+			<visual>
+				<geometry>
+					<cylinder length="${wheel_width}" radius="${wheel_radius}"/>
+				</geometry>
+				<origin rpy="${M_PI/2} 0 0"/>
+				<material name="black"/>
+			</visual>
+			<collision>
+				<geometry>
+					<cylinder length="${wheel_width}" radius="${wheel_radius}"/>
+				</geometry>
+				<origin rpy="${M_PI/2} 0 0"/>
+			</collision>
+			<inertial>
+				<mass value="${wheel_mass}"/>
+				<inertia ixx="${wheel_ixx}" ixy="0" ixz="0" iyy="${wheel_iyy}" iyz="0" izz="${wheel_izz}"/>
+			</inertial>
+		</link>
+		<!-- Wheel link gazebo settings -->
+		<gazebo reference="${lr}_wheel">
+			<mu1>1.0</mu1>
+			<mu2>1.0</mu2>
+			<kp>10000000.0</kp>
+			<kd>100.0</kd>
+		</gazebo>
+
+		<!-- Joint connecting wheel and base -->
+		<joint name="${lr}_wheel_joint" type="continuous">
+			<parent link="${parent}"/>
+			<child link="${lr}_wheel"/>
+			<axis xyz="0 1 0"/>
+			<origin xyz="${wheel_x_pos} ${reflectY * wheel_y_pos} ${wheel_z_pos}"/>
+			<limit effort="100.0" velocity="0.0"/>
+		</joint>
+		<!-- Wheel joint gazebo settings -->
+		<gazebo reference="${lr}_wheel_joint"/>
+
+		<!-- Wheel transmission settings, used for drivetrain -->
+		<transmission name="${lr}_wheel_trans">
+			<type>transmission_interface/SimpleTransmission</type>
+			<joint name="${lr}_wheel_joint">
+				<hardwareInterface>EffortJointInterface</hardwareInterface>
+			</joint>
+			<actuator name="${lr}_wheel_motor">
+				<mechanicalReduction>1</mechanicalReduction>
+			</actuator>
+		</transmission>
+
+	</xacro:macro>
+
+</robot>

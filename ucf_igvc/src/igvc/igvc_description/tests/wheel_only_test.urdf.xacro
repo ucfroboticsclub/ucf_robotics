@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<robot name="wheel_only_test" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<!-- Include full igvc library even though we're not using all of it -->
+	<xacro:include filename="$(find igvc_description)/urdf/igvc_library.urdf.xacro"/>
+
+	<!-- Base link -->
+	<link name="base_link">
+		<visual>
+			<geometry>
+				<box size="0.2 0.2 0.2"/>
+			</geometry>
+			<material name="white"/>
+		</visual>
+		<collision>
+			<geometry>
+				<box size="0.1 0.2 0.2"/>
+			</geometry>
+		</collision>
+		<inertial>
+			<mass value="10"/>
+			<inertia ixx="0.05" ixy="0" ixz="0" iyy="0.05" iyz="0" izz="0.05"/>
+		</inertial>
+	</link>
+	<!-- Gazebo description for base_link -->
+	<gazebo reference="base_link"/>
+
+	<!-- Add the wheels -->
+	<igvc_wheel parent="base_link" lr="right" reflectY="-1"/>
+	<igvc_wheel parent="base_link" lr="left" reflectY="1"/>
+
+</robot>

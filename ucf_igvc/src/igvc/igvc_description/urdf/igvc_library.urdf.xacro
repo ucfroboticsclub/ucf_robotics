@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<!-- Library for easy access to all component macros -->
+	<!-- If you need igvc_properties or igvc_materials for your macro, include them in the file containing the macro -->
+
+	<!-- IGVC wheel description -->
+	<xacro:include filename="$(find igvc_description)/urdf/igvc_wheel.urdf.xacro"/>
+
+</robot>
