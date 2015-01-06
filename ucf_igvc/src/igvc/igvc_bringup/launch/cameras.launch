@@ -1,0 +1,13 @@
+<launch>
+
+	<include file="$(find core_sensors)/launch/usb_camera_stream.launch" >
+		<arg name="cam_name" value="camera_front" />
+		<arg name="cam_serial" value="473B965F" />
+	</include>
+
+	<include file="$(find core_sensors)/launch/usb_camera_stream.launch" >
+		<arg name="cam_name" value="camera_right" />
+		<arg name="cam_serial" value="3E6BF45F" />
+	</include>
+
+</launch>

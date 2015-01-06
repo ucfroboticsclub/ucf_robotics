@@ -1,25 +1,25 @@
 <?xml version="1.0"?>
 <package>
-  <name>igvc_bringup</name>
+  <name>core_sensors</name>
   <version>0.0.0</version>
-  <description>The igvc_bringup package</description>
+  <description>The core_sensors package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="thomaswatters@todo.todo">thomaswatters</maintainer>
+  <maintainer email="thomaswatters@knights.ufcf.edu">Thomas Watters</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
   <!-- Commonly used license strings: -->
   <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
-  <license>TODO</license>
+  <license>BSD</license>
 
 
   <!-- Url tags are optional, but mutiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/igvc_bringup</url> -->
+  <!-- <url type="website">http://wiki.ros.org/core_sensors</url> -->
 
 
   <!-- Author tags are optional, mutiple are allowed, one per tag -->
@@ -40,7 +40,8 @@
   <!-- Use test_depend for packages you need only for testing: -->
   <!--   <test_depend>gtest</test_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
-  <run_depend>core_sensors</run_depend>
+  <build_depend>libuvc_camera</build_depend>
+  <run_depend>libuvc_camera</run_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
