@@ -6,5 +6,9 @@
 
 	<!-- IGVC wheel description -->
 	<xacro:include filename="$(find igvc_description)/urdf/igvc_wheel.urdf.xacro"/>
+	<!-- IGVC caster description -->
+	<xacro:include filename="$(find igvc_description)/urdf/igvc_caster.urdf.xacro"/>
+	<!-- IGVC gazebo description -->
+	<xacro:include filename="$(find igvc_description)/urdf/igvc_gazebo.urdf.xacro"/>
 
 </robot>

@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<xacro:property name="c920_length" value="0.025"/>
+	<xacro:property name="c920_width" value="0.095"/>
+	<xacro:property name="c920_height" value="0.033"/>
+	<xacro:property name="c920_mass" value="5"/>
+
+	<!-- c920 camera definition macro -->
+	<xacro:macro name="c920_camera" params="identifier parent xPos yPos zPos roll pitch yaw">
+		
+		<!-- c920 link description -->
+		<link name="${identifier}_camera">
+			<visual>
+				<geometry>
+					<box size="${c920_length} ${c920_width} ${c920_height}"/>
+				</geometry>
+				<origin rpy="0 0 0"/>
+				<material name="red">
+					<color rgba="1 0 0 1"/>
+				</material>
+			</visual>
+			<collision>
+				<geometry>
+					<box size="${c920_length} ${c920_width} ${c920_height}"/>
+				</geometry>
+				<origin rpy="${roll} ${pitch} ${yaw}"/>
+			</collision>
+			<inertial>
+				<mass value="${c920_mass}"/>
+				<inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+			</inertial>
+		</link>
+
+		<!-- c920 Gazebo link reference -->
+		<!-- Camera reference in Gazebo -->
+		<gazebo reference="${identifier}_camera">
+			<sensor type="camera" name="${identifier}_camera">
+				<update_rate>30.0</update_rate>
+				<camera name="${identifier}">
+					<horizontal_fov>1.3962634</horizontal_fov>
+					<image>
+						<width>800</width>
+						<height>800</height>
+						<format>R8G8B8</format>
+					</image>
+					<clip>
+						<near>0.02</near>
+						<far>300</far>
+					</clip>
+				</camera>
+				<!-- Set up Gazebo plugin for the camera -->
+				<plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+					<alwaysOn>true</alwaysOn>
+					<updateRate>0.0</updateRate>
+					<cameraName>${identifier}_camera</cameraName>
+					<imageTopicName>${identifier}_camera/image_raw</imageTopicName>
+					<cameraInfoTopicName>${identifier}_camera/camera_info</cameraInfoTopicName>
+					<frameName>${identifier}_camera_link</frameName>
+				</plugin>
+			</sensor>
+		</gazebo>
+
+		<!-- c920 joint from parent -->
+		<joint name="${identifier}_camera_joint" type="fixed">
+			<parent link="${parent}"/>
+			<child link="${identifier}_camera"/>
+			<origin xyz="${xPos} ${yPos} ${zPos}" rpy="${roll} ${pitch} ${yaw}"/>
+		</joint>
+
+		<gazebo reference="${identifier}_camera_joint"/>
+		
+	</xacro:macro>
+
+</robot>

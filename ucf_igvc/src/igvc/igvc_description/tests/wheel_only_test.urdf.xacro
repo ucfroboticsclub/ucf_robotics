@@ -3,6 +3,9 @@
 
 	<!-- Include full igvc library even though we're not using all of it -->
 	<xacro:include filename="$(find igvc_description)/urdf/igvc_library.urdf.xacro"/>
+	<xacro:include filename="$(find igvc_description)/urdf/igvc_materials.urdf.xacro"/>
+	<xacro:include filename="$(find core_description)/urdf/sensors/cameras/c920_camera.urdf.xacro"/>
+	<xacro:include filename="$(find core_description)/urdf/sensors/lasers/hokuyo.urdf.xacro"/>
 
 	<!-- Base link -->
 	<link name="base_link">
@@ -21,12 +24,51 @@
 			<mass value="10"/>
 			<inertia ixx="0.05" ixy="0" ixz="0" iyy="0.05" iyz="0" izz="0.05"/>
 		</inertial>
+		<!-- Gazebo description for base_link -->
+		<gazebo reference="base_link"/>
 	</link>
-	<!-- Gazebo description for base_link -->
-	<gazebo reference="base_link"/>
+
+	<!-- Base footprint as a reference to the ground beneath robot -->
+	<link name="base_footprint">
+		<visual>
+			<geometry>
+				<box size="0.001 0.001 0.001"/>
+			</geometry>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+		</visual>
+		<inertial>
+			<mass value="0.0001"/>
+			<origin xyz="0 0 0"/>
+			<inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+		</inertial>
+		<gazebo reference="base_footprint"/>
+	</link>
+
+	<!-- Joint connecting base_link to the footprint -->
+	<joint name="base_footprint_joint" type="fixed">
+		<origin xyz="0 0 0.06"/>
+		<parent link="base_footprint"/>
+		<child link="base_link"/>
+		<gazebo reference="base_footprint_joint"/>
+	</joint>
 
 	<!-- Add the wheels -->
 	<igvc_wheel parent="base_link" lr="right" reflectY="-1"/>
 	<igvc_wheel parent="base_link" lr="left" reflectY="1"/>
 
+	<!-- Add the casters -->
+	<igvc_caster parent="base_link" lr="right" reflectY="-1"/>
+	<igvc_caster parent="base_link" lr="left" reflectY="1"/>
+
+	<!-- Add a camera -->
+	<c920_camera identifier="solo" parent="base_link" xPos="0.1" yPos="0.0" zPos="0.1" roll="0" pitch="0.4" yaw="0"/>
+	<c920_camera identifier="double" parent="base_link" xPos="-0.1" yPos="0.0" zPos="0.1" roll="0" pitch="0.4" yaw="3.14159"/>
+
+	<!-- Add a laser -->
+	<hokuyo_utm30lx parent="base_link" xPos="0.1" yPos="0.1" zPos="0.1" roll="0" pitch="0" yaw="0"/>
+
+	<!-- Set up miscellaneous igvc plugins not related to sensors -->
+	<igvc_gazebo />
+
+	<gazebo reference="igvc"/>
 </robot>

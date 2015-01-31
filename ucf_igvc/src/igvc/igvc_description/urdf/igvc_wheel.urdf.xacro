@@ -3,7 +3,6 @@
 
 	<!-- Include IGVC vehicle properties -->
 	<xacro:include filename="$(find igvc_description)/urdf/igvc_properties.urdf.xacro"/>
-	<xacro:include filename="$(find igvc_description)/urdf/igvc_materials.urdf.xacro"/>
 
 	<!-- Macro providing complete description of a wheel, joint, and motor -->
 	<!-- A differential drive is assumed here. -->
@@ -14,6 +13,7 @@
 		<link name="${lr}_wheel">
 			<visual>
 				<geometry>
+					<!-- Change to mesh when we have them??? -->
 					<cylinder length="${wheel_width}" radius="${wheel_radius}"/>
 				</geometry>
 				<origin rpy="${M_PI/2} 0 0"/>
@@ -30,6 +30,7 @@
 				<inertia ixx="${wheel_ixx}" ixy="0" ixz="0" iyy="${wheel_iyy}" iyz="0" izz="${wheel_izz}"/>
 			</inertial>
 		</link>
+		
 		<!-- Wheel link gazebo settings -->
 		<gazebo reference="${lr}_wheel">
 			<mu1>1.0</mu1>

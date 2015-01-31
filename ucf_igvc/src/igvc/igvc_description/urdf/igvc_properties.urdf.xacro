@@ -7,16 +7,30 @@
 	<!-- Wheel properties -->
 	<property name="wheel_mass" value="5"/>
 	<property name="wheel_width" value="0.02"/>
-	<property name="wheel_radius" value="0.02"/>
+	<property name="wheel_radius" value="0.06"/>
 	<property name="wheel_ixx" value="${(wheel_mass*(3*wheel_radius*wheel_radius + wheel_width*wheel_width))/12}"/>
 	<property name="wheel_iyy" value="${(wheel_mass*(3*wheel_radius*wheel_radius + wheel_width*wheel_width))/12}"/>
 	<property name="wheel_izz" value="${(wheel_mass*wheel_radius*wheel_radius)/2}"/>
 	<property name="wheel_x_pos" value="0"/>
-	<property name="wheel_y_pos" value="0.1"/>
+	<property name="wheel_y_pos" value="${0.1 + wheel_width/2}"/>
 	<property name="wheel_z_pos" value="-0.1"/>
 	<!-- Caster properties -->
-
-	<!-- Camera properties -->
+	<property name="caster_wheel_mass" value="5"/>
+	<property name="caster_wheel_width" value="0.02"/>
+	<property name="caster_wheel_radius" value="0.02"/>
+	<property name="caster_wheel_ixx" value="${(caster_wheel_mass*(3*caster_wheel_radius*caster_wheel_radius + caster_wheel_width*caster_wheel_width))/12}"/>
+	<property name="caster_wheel_iyy" value="${(caster_wheel_mass*(3*caster_wheel_radius*caster_wheel_radius + caster_wheel_width*caster_wheel_width))/12}"/>
+	<property name="caster_wheel_izz" value="${(caster_wheel_mass*caster_wheel_radius*caster_wheel_radius)/2}"/>
+	<!-- Caster rotator properties -->
+	<property name="caster_rotator_mass" value="1"/>
+	<property name="caster_rotator_width" value="0.001"/>
+	<property name="caster_rotator_radius" value="${caster_wheel_radius}"/>
+	<property name="caster_rotator_ixx" value="0.001"/>
+	<property name="caster_rotator_iyy" value="0.001"/>
+	<property name="caster_rotator_izz" value="0.001"/>
+	<property name="caster_x_pos" value="0.08"/>
+	<property name="caster_y_pos" value="0.02"/>
+	<property name="caster_z_pos" value="-0.1"/>
 
 	<!-- LIDAR properties -->
 </robot>
