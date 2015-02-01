@@ -6,7 +6,7 @@
 	<property name="chassis_mass" value="62"/>
 	<property name="chassis_length" value="1.14"/>
 	<property name="chassis_width" value="0.559"/>
-	<property name="chassis_height" value="0.5"/>
+	<property name="chassis_height" value="0.42"/>
 	<property name="chassis_ixx" value="${(chassis_mass*(chassis_length*chassis_length+chassis_height*chassis_height))/12}"/>
 	<property name="chassis_iyy" value="${(chassis_mass*(chassis_height*chassis_height+chassis_width*chassis_width))/12}"/>
 	<property name="chassis_izz" value="${(chassis_mass*(chassis_width*chassis_width+chassis_length*chassis_length))/12}"/>
