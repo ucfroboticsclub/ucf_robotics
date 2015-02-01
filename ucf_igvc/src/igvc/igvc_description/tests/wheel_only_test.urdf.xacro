@@ -6,23 +6,24 @@
 	<xacro:include filename="$(find igvc_description)/urdf/igvc_materials.urdf.xacro"/>
 	<xacro:include filename="$(find core_description)/urdf/sensors/cameras/c920_camera.urdf.xacro"/>
 	<xacro:include filename="$(find core_description)/urdf/sensors/lasers/hokuyo.urdf.xacro"/>
+	<xacro:include filename="$(find igvc_description)/urdf/igvc_properties.urdf.xacro"/>
 
 	<!-- Base link -->
 	<link name="base_link">
 		<visual>
 			<geometry>
-				<box size="0.2 0.2 0.2"/>
+				<box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
 			</geometry>
-			<material name="white"/>
+			
 		</visual>
 		<collision>
 			<geometry>
-				<box size="0.1 0.2 0.2"/>
+				<box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
 			</geometry>
 		</collision>
 		<inertial>
-			<mass value="10"/>
-			<inertia ixx="0.05" ixy="0" ixz="0" iyy="0.05" iyz="0" izz="0.05"/>
+			<mass value="${chassis_mass}"/>
+			<inertia ixx="${chassis_ixx}" ixy="0" ixz="0" iyy="${chassis_iyy}" iyz="0" izz="${chassis_izz}"/>
 		</inertial>
 		<!-- Gazebo description for base_link -->
 		<gazebo reference="base_link"/>
@@ -46,7 +47,7 @@
 
 	<!-- Joint connecting base_link to the footprint -->
 	<joint name="base_footprint_joint" type="fixed">
-		<origin xyz="0 0 0.06"/>
+		<origin xyz="0 0 ${chassis_height/2}"/>
 		<parent link="base_footprint"/>
 		<child link="base_link"/>
 		<gazebo reference="base_footprint_joint"/>
@@ -61,11 +62,11 @@
 	<igvc_caster parent="base_link" lr="left" reflectY="1"/>
 
 	<!-- Add a camera -->
-	<c920_camera identifier="solo" parent="base_link" xPos="0.1" yPos="0.0" zPos="0.1" roll="0" pitch="0.4" yaw="0"/>
-	<c920_camera identifier="double" parent="base_link" xPos="-0.1" yPos="0.0" zPos="0.1" roll="0" pitch="0.4" yaw="3.14159"/>
+	<c920_camera identifier="solo" parent="base_link" xPos="${chassis_length/2}" yPos="0" zPos="${chassis_height/2}" roll="0" pitch="0.4" yaw="0"/>
+	<c920_camera identifier="double" parent="base_link" xPos="-${chassis_length/2}" yPos="0.0" zPos="${chassis_height/2}" roll="0" pitch="0.4" yaw="3.14159"/>
 
 	<!-- Add a laser -->
-	<hokuyo_utm30lx parent="base_link" xPos="0.1" yPos="0.1" zPos="0.1" roll="0" pitch="0" yaw="0"/>
+	<hokuyo_utm30lx parent="base_link" xPos="0" yPos="0" zPos="${chassis_height/2 + 0.2}" roll="0" pitch="-0.01" yaw="0"/>
 
 	<!-- Set up miscellaneous igvc plugins not related to sensors -->
 	<igvc_gazebo />
