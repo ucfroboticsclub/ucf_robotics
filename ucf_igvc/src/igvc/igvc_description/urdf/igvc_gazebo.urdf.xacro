@@ -11,8 +11,10 @@
 			<plugin name="diff_drive_controller" filename="libgazebo_ros_diff_drive.so">
 				<alwaysOn>true</alwaysOn>
 				<updateRate>100.0</updateRate>
-				<leftJoint>left_wheel_joint</leftJoint>
-				<rightJoint>right_wheel_joint</rightJoint>
+				<!-- Joints have to be set BACKWARDS from what we expect -->
+				<!-- Not sure why, assume they define left and right from a head on view -->
+				<leftJoint>right_wheel_joint</leftJoint>
+				<rightJoint>left_wheel_joint</rightJoint>
 				<wheelSeparation>${chassis_width + wheel_width/2}</wheelSeparation>
 				<wheelDiameter>${2*wheel_radius}</wheelDiameter>
 				<wheelTorque>27</wheelTorque>
