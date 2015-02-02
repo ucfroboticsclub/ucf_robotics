@@ -39,10 +39,10 @@
 			<sensor type="camera" name="${identifier}_camera">
 				<update_rate>30.0</update_rate>
 				<camera name="${identifier}">
-					<horizontal_fov>1.3962634</horizontal_fov>
+					<horizontal_fov>1.57057</horizontal_fov>
 					<image>
-						<width>800</width>
-						<height>800</height>
+						<width>1920</width>
+						<height>1080</height>
 						<format>R8G8B8</format>
 					</image>
 					<clip>
@@ -55,9 +55,9 @@
 					<alwaysOn>true</alwaysOn>
 					<updateRate>0.0</updateRate>
 					<cameraName>${identifier}_camera</cameraName>
-					<imageTopicName>${identifier}_camera/image_raw</imageTopicName>
-					<cameraInfoTopicName>${identifier}_camera/camera_info</cameraInfoTopicName>
-					<frameName>${identifier}_camera_link</frameName>
+					<imageTopicName>image_raw</imageTopicName>
+					<cameraInfoTopicName>camera_info</cameraInfoTopicName>
+					<frameName>${identifier}_camera</frameName>
 				</plugin>
 			</sensor>
 		</gazebo>
