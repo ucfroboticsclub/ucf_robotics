@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<robot name="sensor_hokuyo" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:property name="utm30lx_mass" value="0.000001"/>
+    <xacro:property name="utm30lx_length" value="0.025"/>
+    <xacro:property name="utm30lx_width" value="0.025"/>
+    <xacro:property name="utm30lx_height" value="0.025"/>
+
+    <!-- Hokuyo 2D LIDAR -->
+    <xacro:macro name="hokuyo_utm30lx" params="parent xPos yPos zPos roll pitch yaw">
+        <joint name="base_laser_joint" type="fixed">
+            <origin xyz="${xPos} ${yPos} ${zPos}" rpy="${roll} ${pitch} ${yaw}" />
+            <parent link="${parent}" />
+            <child link="base_laser" />
+        </joint>
+
+        <link name="base_laser">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="${utm30lx_length} ${utm30lx_width} ${utm30lx_height}"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="${utm30lx_mass}" />
+                <origin xyz="0 0 0" />
+                <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                    iyy="0.0001" iyz="0.0"
+                    izz="0.0001" />
+            </inertial>
+        </link>
+        
+        <!-- Set up laser gazebo details -->
+        <gazebo reference="base_laser">
+            <sensor type="ray" name="laser">
+                <pose>0 0 0 0 0 0</pose>
+                <visualize>true</visualize>
+                <update_rate>40</update_rate>
+                <ray>
+                    <scan>
+                        <horizontal>
+                            <samples>1080</samples>
+                            <resolution>1</resolution>
+                            <min_angle>-2.3562</min_angle>
+                            <max_angle>2.3562</max_angle>
+                        </horizontal>
+                    </scan>
+                    <range>
+                        <min>0.10</min>
+                        <max>30.0</max>
+                        <resolution>0.01</resolution>
+                    </range>
+                    <noise>
+                        <type>gaussian</type>
+                        <mean>0.0</mean>
+                        <stddev>0.01</stddev>
+                    </noise>
+                </ray>
+                <plugin name="hokuyo_node" filename="libgazebo_ros_laser.so">
+                    <topicName>/scan</topicName>
+                    <frameName>base_laser</frameName>
+                </plugin>
+            </sensor>
+        </gazebo>
+    </xacro:macro>
+</robot>
