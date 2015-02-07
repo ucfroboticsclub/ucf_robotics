@@ -34,7 +34,7 @@ If you're completely new, follow these steps to get up and running with our curr
   
 5. In the same terminal window where you have sourced the ucf_core setup.bash, navigate to any other workspaces you want to build.
 
-6. Perform the same `rosdep install` as shown in step 3, build, and source to use.
+6. Perform the same `rosdep install` as shown in step 4, build, and source to use.
 
 ## <a name="current-maintainers"></a>Current Maintainers
 If you need to quickly get in contact with someone with any questions about setup, your best bets are currently:
