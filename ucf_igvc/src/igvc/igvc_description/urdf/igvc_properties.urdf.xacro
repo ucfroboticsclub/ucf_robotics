@@ -18,12 +18,12 @@
 	<property name="wheel_iyy" value="${(wheel_mass*(3*wheel_radius*wheel_radius + wheel_width*wheel_width))/12}"/>
 	<property name="wheel_izz" value="${(wheel_mass*wheel_radius*wheel_radius)/2}"/>
 	<property name="wheel_x_pos" value="-${chassis_length/2 - wheel_radius - 0.05}"/>
-	<property name="wheel_y_pos" value="${0.3 + wheel_width/2}"/>
+	<property name="wheel_y_pos" value="${0.3048 + wheel_width/2}"/>
 	<property name="wheel_z_pos" value="-${chassis_height/2 + 0.1}"/>
 	<!-- Caster properties -->
 	<property name="caster_wheel_mass" value="2"/>
 	<property name="caster_wheel_width" value="0.071"/>
-	<property name="caster_wheel_radius" value="0.101"/>
+	<property name="caster_wheel_radius" value="0.107"/>
 	<property name="caster_wheel_ixx" value="${(caster_wheel_mass*(3*caster_wheel_radius*caster_wheel_radius + caster_wheel_width*caster_wheel_width))/12}"/>
 	<property name="caster_wheel_iyy" value="${(caster_wheel_mass*(3*caster_wheel_radius*caster_wheel_radius + caster_wheel_width*caster_wheel_width))/12}"/>
 	<property name="caster_wheel_izz" value="${(caster_wheel_mass*caster_wheel_radius*caster_wheel_radius)/2}"/>

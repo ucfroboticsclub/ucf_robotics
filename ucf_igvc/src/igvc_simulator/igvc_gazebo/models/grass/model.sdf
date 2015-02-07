@@ -1,9 +1,9 @@
-<?xml version='1.0'?>
-<sdf version='1.3'>
-  <model name='grass'>
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <model name="grass">
     <static>true</static>
-    <link name='link'>
-      <collision name='collision'>
+    <link name="link">
+      <collision name="collision">
         <max_contacts>4</max_contacts>
         <geometry>
           <plane>
@@ -14,8 +14,10 @@
         <surface>
           <friction>
             <ode>
-              <mu>1</mu> <!-- 100 -->
-              <mu2>0.7</mu2> <!-- 50 -->
+              <mu>1</mu>
+              <!-- 100 -->
+              <mu2>0.7</mu2>
+              <!-- 50 -->
             </ode>
           </friction>
         </surface>
@@ -39,4 +41,3 @@
     </link>
   </model>
 </sdf>
-

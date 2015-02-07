@@ -34,15 +34,15 @@
         <gazebo reference="base_laser">
             <sensor type="ray" name="laser">
                 <pose>0 0 0 0 0 0</pose>
-                <visualize>false</visualize>
+                <visualize>true</visualize>
                 <update_rate>40</update_rate>
                 <ray>
                     <scan>
                         <horizontal>
-                            <samples>720</samples>
+                            <samples>1080</samples>
                             <resolution>1</resolution>
-                            <min_angle>-1.570796</min_angle>
-                            <max_angle>1.570796</max_angle>
+                            <min_angle>-2.3562</min_angle>
+                            <max_angle>2.3562</max_angle>
                         </horizontal>
                     </scan>
                     <range>
@@ -51,7 +51,7 @@
                         <resolution>0.01</resolution>
                     </range>
                     <noise>
-                        <type>Gaussian</type>
+                        <type>gaussian</type>
                         <mean>0.0</mean>
                         <stddev>0.01</stddev>
                     </noise>
