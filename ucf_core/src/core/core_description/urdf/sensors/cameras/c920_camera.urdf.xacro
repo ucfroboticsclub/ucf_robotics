@@ -25,7 +25,6 @@
 				<geometry>
 					<box size="${c920_length} ${c920_width} ${c920_height}"/>
 				</geometry>
-				<origin rpy="${roll} ${pitch} ${yaw}"/>
 			</collision>
 			<inertial>
 				<mass value="${c920_mass}"/>
@@ -39,7 +38,7 @@
 			<sensor type="camera" name="${identifier}_camera">
 				<update_rate>30.0</update_rate>
 				<camera name="${identifier}">
-					<horizontal_fov>1.57057</horizontal_fov>
+					<horizontal_fov>1.05</horizontal_fov>
 					<image>
 						<width>1920</width>
 						<height>1080</height>
