@@ -1,0 +1,6 @@
+<!-- 
+	Launch file for testing/viewing IGVC navigation performance in rviz. 
+-->
+<launch>
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find igvc_rviz)/rviz/view_navigation.rviz" />
+</launch>

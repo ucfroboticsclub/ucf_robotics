@@ -1,3 +1,6 @@
+<!--
+    Launch file launching the IGVC gazebo setup in headless mode 
+ -->
 <launch>
     <arg name="world" default="$(find igvc_gazebo)/worlds/basic_course.world"/>
  
@@ -6,6 +9,8 @@
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="world_name" value="$(arg world)" />
         <arg name="use_sim_time" value="true" />
+        <arg name="gui" value="false" />
+        <arg name="headless" value="true" />
     </include>
 
     <!-- urdf xml robot description loaded on the Parameter Server-->
