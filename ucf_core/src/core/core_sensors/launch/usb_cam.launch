@@ -5,6 +5,8 @@
   <arg name="cam_port" default="" />
 
     <node pkg="usb_cam" type="usb_cam_node" name="$(arg cam_name)">
+
+      <!-- video_device -->
       <param name="video_device" value="$(arg cam_port)" />
       <param name="image_width" value="1280" />
       <param name="image_height" value="720" />
