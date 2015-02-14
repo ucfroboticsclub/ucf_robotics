@@ -1,0 +1,6 @@
+<!--
+	Launch file for testing/viewing camera configurations and data in Rviz 
+ -->
+ <launch>
+ 	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find igvc_rviz)/rviz/view_cameras.rviz" />
+ </launch>

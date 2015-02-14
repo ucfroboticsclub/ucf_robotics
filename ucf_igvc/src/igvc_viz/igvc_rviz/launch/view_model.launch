@@ -1,0 +1,6 @@
+<!-- 
+	Launch file for testing/viewing the IGVC model in rviz.
+-->
+<launch>
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find igvc_rviz)/rviz/view_model.rviz" />
+</launch>
