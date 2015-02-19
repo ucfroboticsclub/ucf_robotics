@@ -10,11 +10,11 @@ This repository contains the current most stable and 'easy'-to-use version of ou
 
 ## <a name="workspaces"></a>Workspaces
 Each folder below this directory is a ROS workspace.  Links to each workspace are provided below.
-* [ucf-core](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_core)
-* [ucf-igvc](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_igvc)
-* [ucf-sub](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_sub)
-* [ucf-boat](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_boat)
-* [ucf-turtlebot](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_turtlebot)
+* [ucf_core](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_core)
+* [ucf_igvc](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_igvc)
+* [ucf_sub](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_sub)
+* [ucf_boat](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_boat)
+* [ucf_turtlebot](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_turtlebot)
 
 ## <a name="getting-started"></a>Getting Started
 If you're completely new, follow these steps to get up and running with our current builds.
