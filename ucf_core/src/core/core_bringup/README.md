@@ -20,15 +20,7 @@ Below is a brief description and use information for the various launch files co
 
 ##### <a name="usb_cam" />usb_cam.launch
 
-This launch file launches a <a href="http://wiki.ros.org/usb_cam" >usb_cam_node</a> to communicate with a usb camera ( specifically tested with c920 ). As of now the launch file must be passed a camera name(cam_name) and a camera port(cam_port). ROS needs write/read access to the cam_port. UDEV rules can be added as indicated below in order to make this easier.
-
-In a terminal:
-
-```
-sudo su
-echo 'SUBSYSTEMS=="usb", ATTRS{idVendor}=="046d", MODE="0666"' > /etc/udev/rules.d/99-uvc.rules 
-exit
-```
+This launch file launches a <a href="http://wiki.ros.org/usb_cam" >usb_cam_node</a> to communicate with a usb camera ( specifically tested with c920 ). As of now the launch file must be passed a camera name(cam_name) and a camera port(cam_port). ROS needs write/read access to the cam_port. 
 
 The launch file can be ran with following:
 
