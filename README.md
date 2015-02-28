@@ -10,11 +10,11 @@ This repository contains the current most stable and 'easy'-to-use version of ou
 
 ## <a name="workspaces"></a>Workspaces
 Each folder below this directory is a ROS workspace.  Links to each workspace are provided below.
-* [ucf-core](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_core)
-* [ucf-igvc](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_igvc)
-* [ucf-sub](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_sub)
-* [ucf-boat](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_boat)
-* [ucf-turtlebot](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_turtlebot)
+* [ucf_core](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_core)
+* [ucf_igvc](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_igvc)
+* [ucf_sub](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_sub)
+* [ucf_boat](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_boat)
+* [ucf_turtlebot](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_turtlebot)
 
 ## <a name="getting-started"></a>Getting Started
 If you're completely new, follow these steps to get up and running with our current builds.
@@ -23,16 +23,16 @@ If you're completely new, follow these steps to get up and running with our curr
 
 2. Become familiar with basic ROS functionality including how to build existing packages and create new ones.  The book linked above is an excellent resource for getting started and a fairly short read.
 
-3. Fork (reccomended if you're looking to get involved in development) and clone this repository.
+3. Fork (recommended if you're looking to get involved in development) and clone this repository.
 
 4. Build ucf_core first.
-  1. From the top level of that workspace, enter the following in the terminal:
+  1. In a terminal navigate to ../ucf_robotics/ucf_core/ , enter the following:
     
     `rosdep install -i -y --from-paths src`
     
   2. Now `catkin_make` and `source devel/setup.bash` like usual.
   
-5. In the same terminal window where you have sourced the ucf_core setup.bash, navigate to any other workspaces you want to build.
+5. In the same terminal window where you have sourced the ucf_core setup.bash, navigate to any other workspaces you want to build ( ie. ucf_igvc, ucf_boat, ucf_sub ).
 
 6. Perform the same `rosdep install` as shown in step 4, build, and source to use.
 
