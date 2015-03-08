@@ -26,60 +26,44 @@ DAMAGE.
 
 @author Thomas Watters (thomaswatters@knights.ucf.edu)
 
- */
+*/
 
-#include <ros/ros.h>
-#include <geometry_msgs/Twist.h>
-#include <roboteq_msgs/Command.h>
 #include "../include/igvc_vel_controller/velocity_controller.h"
 
-int main(int argc, char** argv)
+namespace igvc
 {
-	ROS_INFO("Starting vel_controller_node");
-	ros::init(argc, argv, "~");
-	ros::NodeHandle nh("~");
 
-    std::string cmd_vel_topic;
-    double wheel_radius, base_radius;
-	if( !nh.getParam("cmd_vel_topic", cmd_vel_topic) )
-	{
-        ROS_INFO("No Command Velocit, left_motor_topic, right_motor_topic;y topics provided using default -- /cmd_vel");
-		cmd_vel_topic = "/cmd_vel" ;
-	}
+VelocityController::VelocityController(std::string cmd_topic, std::vector<std::string> namespaces,
+                                       double wheel_radius, double base_radius)
+ : nh_(), base_radius_(base_radius), wheel_radius_(wheel_radius)
+{
+    left_motor_pub_ = nh_.advertise<roboteq_msgs::Command>(namespaces[0] + "/cmd", 1);
+    right_motor_pub_ = nh_.advertise<roboteq_msgs::Command>(namespaces[1] + "/cmd", 1);
 
-	if(!nh.hasParam("channels"))
-	{
-		ROS_INFO("No Motor Channels Provided");
-		return -1;
-    }
+    cmd_vel_topic_ = nh_.subscribe(cmd_topic, 1, &VelocityController::cmd_vel_callback, this);
+}
 
-	XmlRpc::XmlRpcValue channels;
-	nh.param("channels", channels, channels);
-	if(channels.size() != 2)
-	{
-		ROS_INFO("Invalid Number of Motor Channels");
-		return -1;
-	}
+VelocityController::~VelocityController()
+{
 
-    std::vector< std::string > namespaces;
-    namespaces.push_back((std::string)channels[0]);
-    namespaces.push_back((std::string)channels[1]);
+}
 
-	if( !nh.getParam("wheel_radius", wheel_radius ) )
-	{
-		ROS_INFO("No wheel radius provided");
-		return -1;
-	}
+void VelocityController::cmd_vel_callback(const geometry_msgs::Twist &msg)
+{
+    //TODO: Add PID Controllers for both velocity vectors
 
-	if( !nh.getParam("base_radius", base_radius ))
-	{
-		ROS_INFO("No radius prodived for base of robot");
-		return  -1;
-	}
+    double linear_velocity_x = msg.linear.x;	// linear x m/s
+    double angular_velocity_z = msg.angular.z; 	// yaw rad/s
 
-    igvc::VelocityController vc(cmd_vel_topic,namespaces,wheel_radius, base_radius);
+    double linear_contribution = linear_velocity_x / wheel_radius_;
+    double angular_contribution = angular_velocity_z * base_radius_ / wheel_radius_;
 
-	ros::spin();
+    roboteq_msgs::Command left_cmd, right_cmd;
+    left_cmd.commanded_velocity = linear_contribution + angular_contribution;
+    right_cmd.commanded_velocity = linear_contribution - angular_contribution;
 
-	return 0;
+    left_motor_pub_.publish(left_cmd);
+    right_motor_pub_.publish(right_cmd);
+}
+
 }

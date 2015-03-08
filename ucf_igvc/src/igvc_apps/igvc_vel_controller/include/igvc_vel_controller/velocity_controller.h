@@ -31,55 +31,34 @@ DAMAGE.
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include <roboteq_msgs/Command.h>
-#include "../include/igvc_vel_controller/velocity_controller.h"
+#include <vector>
 
-int main(int argc, char** argv)
+
+namespace igvc
 {
-	ROS_INFO("Starting vel_controller_node");
-	ros::init(argc, argv, "~");
-	ros::NodeHandle nh("~");
 
-    std::string cmd_vel_topic;
-    double wheel_radius, base_radius;
-	if( !nh.getParam("cmd_vel_topic", cmd_vel_topic) )
-	{
-        ROS_INFO("No Command Velocit, left_motor_topic, right_motor_topic;y topics provided using default -- /cmd_vel");
-		cmd_vel_topic = "/cmd_vel" ;
-	}
+class VelocityController
+{
+public:
+    VelocityController(std::string, std::vector< std::string >, double, double);
+    ~VelocityController();
 
-	if(!nh.hasParam("channels"))
-	{
-		ROS_INFO("No Motor Channels Provided");
-		return -1;
-    }
+private:
 
-	XmlRpc::XmlRpcValue channels;
-	nh.param("channels", channels, channels);
-	if(channels.size() != 2)
-	{
-		ROS_INFO("Invalid Number of Motor Channels");
-		return -1;
-	}
+    ros::NodeHandle nh_;
+    //Topic containing geometryTwist for vehicle velocity input
+    ros::Subscriber cmd_vel_topic_;
 
-    std::vector< std::string > namespaces;
-    namespaces.push_back((std::string)channels[0]);
-    namespaces.push_back((std::string)channels[1]);
+    //Topics that the roboteq driver is listening to
+    ros::Publisher left_motor_pub_;
+    ros::Publisher right_motor_pub_;
 
-	if( !nh.getParam("wheel_radius", wheel_radius ) )
-	{
-		ROS_INFO("No wheel radius provided");
-		return -1;
-	}
+    //Vehicle dimensions required for calculations
+    double wheel_radius_, base_radius_;
 
-	if( !nh.getParam("base_radius", base_radius ))
-	{
-		ROS_INFO("No radius prodived for base of robot");
-		return  -1;
-	}
+    //Callbacks
+    void cmd_vel_callback(const geometry_msgs::Twist& msg);
 
-    igvc::VelocityController vc(cmd_vel_topic,namespaces,wheel_radius, base_radius);
+};
 
-	ros::spin();
-
-	return 0;
 }
