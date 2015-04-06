@@ -1,0 +1,1 @@
+KERNEL=="ttyUSB[0-9]*", ATTRS{serial}=="FTFUUTW1", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", SYMLINK+="sparton/ahrs8", MODE="0666"
