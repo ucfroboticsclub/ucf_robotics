@@ -1,0 +1,4 @@
+#request
+---
+#response
+geometry_msgs/Pose waypoint
