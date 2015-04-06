@@ -11,3 +11,6 @@ srv_gen/
 
 # qtcreator auto-files
 CMakeLists.txt.user
+
+# Jetbrains IDE files
+.idea/

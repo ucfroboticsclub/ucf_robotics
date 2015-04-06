@@ -1,0 +1,5 @@
+#request constants
+geometry_msgs/Pose waypoint
+---
+#response constants
+std_msgs/Empty empty
