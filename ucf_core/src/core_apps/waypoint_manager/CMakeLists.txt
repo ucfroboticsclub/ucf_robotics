@@ -6,6 +6,7 @@ project(waypoint_manager)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  std_srvs
   waypoint_manager_msgs
 )
 
