@@ -7,6 +7,7 @@
 	<xacro:include filename="$(find core_description)/urdf/sensors/cameras/c920_camera.urdf.xacro"/>
 	<xacro:include filename="$(find core_description)/urdf/sensors/lasers/hokuyo.urdf.xacro"/>
 	<xacro:include filename="$(find core_description)/urdf/sensors/imu/sparton_ahrs8.urdf.xacro"/>
+	<xacro:include filename="$(find core_description)/urdf/sensors/gps/csi_minimax.urdf.xacro" />
 	<xacro:include filename="$(find igvc_description)/urdf/igvc_properties.urdf.xacro"/>
 
 	<!-- Base link -->
@@ -71,6 +72,9 @@
 
 	<!-- Add AHRS-8 -->
 	<sparton_ahrs8 parent="base_link" xPos="0.0" yPos="0" zPos="0.2" roll="0" pitch="0" yaw="0"/>
+
+	<!-- Add GPS -->
+	<minimax_gps parent="base_link" xPos="-0.2" yPos="0" zPos="0.2" roll="0" pitch="0" yaw="0" />
 
 	<!-- Set up miscellaneous igvc plugins not related to sensors -->
 	<igvc_gazebo />
