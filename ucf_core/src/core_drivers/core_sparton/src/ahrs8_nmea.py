@@ -120,7 +120,7 @@ if __name__ == '__main__':
     imu_msg = Imu()
 
     # Set IMU device transform frame.
-    imu_msg.header.frame_id = "placeholder"
+    imu_msg.header.frame_id = "ahrs8_imu"
 
     # Default matrix to use for covariance of each measurement set.
     default_covariance_matrix = [1e-6, 0, 0,
