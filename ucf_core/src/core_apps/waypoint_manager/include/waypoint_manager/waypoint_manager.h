@@ -4,9 +4,8 @@
 #include <vector>
 #include "ros/ros.h"
 #include "geometry_msgs/Pose.h"
+#include "std_srvs/Empty.h"
 #include "waypoint_manager_msgs/NextWaypoint.h"
-#include "waypoint_manager_msgs/AdvanceWaypoint.h"
-#include "waypoint_manager_msgs/BacktrackWaypoint.h"
 #include "waypoint_manager_msgs/PushWaypoint.h"
 
 class WaypointManager
@@ -22,9 +21,9 @@ private:
     // Callback for retrieving the current target waypoint.
     bool nextWaypointCallback(waypoint_manager_msgs::NextWaypoint::Request&, waypoint_manager_msgs::NextWaypoint::Response&);
     // Callback for advancing to next waypoint including stack(s) manipulation.
-    bool advanceWaypointCallback(waypoint_manager_msgs::AdvanceWaypoint::Request&, waypoint_manager_msgs::AdvanceWaypoint::Response&);
+    bool advanceWaypointCallback(std_srvs::Empty::Request&, std_srvs::Empty::Response&);
     // Callback for backtracking to previously visited waypoint including stack(s) manipulation.
-    bool backtrackWaypointCallback(waypoint_manager_msgs::BacktrackWaypoint::Request&, waypoint_manager_msgs::BacktrackWaypoint::Response&);
+    bool backtrackWaypointCallback(std_srvs::Empty::Request&, std_srvs::Empty::Response&);
     // Callback for pushing new (generated) waypoint onto the forward stack.
     bool pushNewWaypointCallback(waypoint_manager_msgs::PushWaypoint::Request&, waypoint_manager_msgs::PushWaypoint::Response&);
 

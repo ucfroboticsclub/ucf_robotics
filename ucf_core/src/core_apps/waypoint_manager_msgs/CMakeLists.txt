@@ -53,8 +53,6 @@ find_package(catkin REQUIRED COMPONENTS
 add_service_files(
   DIRECTORY srv
   FILES
-  AdvanceWaypoint.srv
-  BacktrackWaypoint.srv
   NextWaypoint.srv
   PushWaypoint.srv
 )

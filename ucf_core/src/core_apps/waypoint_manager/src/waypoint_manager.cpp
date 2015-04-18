@@ -40,7 +40,7 @@ bool WaypointManager::nextWaypointCallback(waypoint_manager_msgs::NextWaypoint::
     return true;
 }
 
-bool WaypointManager::advanceWaypointCallback(waypoint_manager_msgs::AdvanceWaypoint::Request&, waypoint_manager_msgs::AdvanceWaypoint::Response&)
+bool WaypointManager::advanceWaypointCallback(std_srvs::Empty::Request&, std_srvs::Empty::Response&)
 {
     // If forward stack empty, fail service request.
     if (forward_waypoint_stack_.empty())
@@ -52,7 +52,7 @@ bool WaypointManager::advanceWaypointCallback(waypoint_manager_msgs::AdvanceWayp
     return true;
 }
 
-bool WaypointManager::backtrackWaypointCallback(waypoint_manager_msgs::BacktrackWaypoint::Request&, waypoint_manager_msgs::BacktrackWaypoint::Response&)
+bool WaypointManager::backtrackWaypointCallback(std_srvs::Empty::Request&, std_srvs::Empty::Response&)
 {
     // If visited stack empty, fail service request.
     if (visited_waypoint_stack_.empty())
