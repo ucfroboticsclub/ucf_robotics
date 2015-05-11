@@ -1,0 +1,7 @@
+<!-- Launch file for a generic GPS device implementing NMEA -->
+<launch>
+    <node pkg="nmea_navsat_driver" type="nmea_serial_driver" name="nmea_gps" >
+        <param name="port" value="/dev/ttyUSB0"/>
+        <param name="baud" value="9600"/>
+    </node>
+</launch>
