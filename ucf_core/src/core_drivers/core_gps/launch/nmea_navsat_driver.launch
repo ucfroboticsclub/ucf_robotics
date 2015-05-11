@@ -3,5 +3,6 @@
     <node pkg="nmea_navsat_driver" type="nmea_serial_driver" name="nmea_gps" >
         <param name="port" value="/dev/ttyUSB0"/>
         <param name="baud" value="9600"/>
+        <param name="frame_id" value="minimax_gps"/>
     </node>
 </launch>
