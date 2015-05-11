@@ -1,11 +1,17 @@
 <!-- Launch file for IGVC localization using IMU and encoder data. -->
 
+<!-- Inputs:
+                IMU data
+                Wheel odometry data
+
+     Outputs:
+                Odometry data from continuous sources -->
 <launch>
 
     <!-- Node fusing continuous measurements such as IMU and encoder data.
          NOTE: If we fuse GPS data, we likely need to use two nodes, one with GPS one without. -->
 
-    <node name="igvc_localization" pkg="robot_localization" type="ekf_localization_node" clear_params="true">
+    <node name="igvc_localization_continuous" pkg="robot_localization" type="ekf_localization_node" clear_params="true">
         <!-- The frequency to attempt to publish position information at. -->
         <param name="frequency" value="30"/>
         <!-- The time we allow for a sensor to provide new data before timing out. -->
@@ -28,7 +34,6 @@
              Note that twist and pose are the covariancestamped varieties. -->
         <param name="imu0" value="imu/data"/>
         <param name="odom0" value="placeholder/odom"/>
-        <param name="twist0" value="placeholder/twist"/>
 
         <!-- Configuration of the inputs specified above.  Matrix defining what to use in estimates. -->
         <!-- Values are laid out as shown below:
@@ -50,17 +55,13 @@
                                         false, false, false,
                                         false, false, false]</rosparam>
 
-        <rosparam param="twist0_config">[false, false, false,
-                                         false, false, false,
-                                         true, true, true,
-                                         true, true, true,
-                                         false, false, false]</rosparam>
-
         <!-- Whether to use the sensors capable of absolute measurements in differential mode. -->
         <!-- More reading needs to be done here, false for now.  Note Twist has no absolute values. -->
         <param name="imu0_differential" value="false"/>
         <param name="odom0_differential" value="false"/>
 
+        <!-- Remap output -->
+        <remap from="odometry/filtered" to="odometry/local"/>
     </node>
 
 </launch>

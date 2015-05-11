@@ -1,0 +1,44 @@
+<!-- robot_localization navsat_transform_node launch file.
+     Fuses GPS information with output from EKF localization node. -->
+
+<!-- Inputs:
+                IMU data
+                Fused ekf odometry data
+                GPS coordinates
+
+     Outputs:
+                Robot GPS coordinates transformed into world frame
+                Robot world frame position transformed to GPS coordinates -->
+<launch>
+    <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform">
+
+        <!-- Magnetic declination for our location. -->
+        <param name="magnetic_declination_radians" value="0" />
+
+        <!-- Time to wait before calculating transform from GPS to robot world frame -->
+        <param name="delay" value="0" />
+
+        <!-- Whether to set nav_msgs/Odometry output Z value to 0 -->
+        <param name="zero_altitude" value="true"/>
+
+        <!-- Whether to publish the robot position again in GPS coordinates -->
+        <param name="publish_filtered_gps" value="false" />
+
+        <!-- Whether to publish transform between UTM grid and frame of input odometry data -->
+        <param name="broadcast_utm_transform" value="false"/>
+
+        <!-- Whether to use heading from odometry message instead of IMU -->
+        <param name="use_odometry_yaw" value="true" />
+
+
+        <!-- Remap input topics. -->
+        <!-- <remap from="imu/data" to="imu/data" /> -->
+        <!-- <remap from="odometry/filtered" to="odometry/filtered" /> -->
+        <!-- <remap from="gps/fix" to="gps/fix" /> -->
+
+        <!-- Remap output topics. -->
+        <!-- <remap from="odometry/gps" to="odometry/gps" /> -->
+        <!-- <remap from="gps/filtered" to="gps/filtered" /> -->
+
+    </node>
+</launch>
