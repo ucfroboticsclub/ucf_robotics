@@ -6,7 +6,7 @@
 
     <!-- Launch an AHRS-8 node. -->
     <node name="ahrs8" pkg="core_sparton" type="ahrs8_nmea.py">
-        <param name="port" value="/dev/sparton/ahrs8"/>
-        <param name="baud" value="115200"/>
+        <param name="port" value="$(arg port)" />
+        <param name="baud" value="$(arg baud)" />
     </node>
 </launch>
