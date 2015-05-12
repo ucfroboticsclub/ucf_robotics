@@ -1,0 +1,16 @@
+<!-- Launch file for opening connection to a USB camera -->
+<launch>
+
+    <!-- Arguments necessary to distinguish and locate camera -->
+    <arg name="cam_name" default="camera" />
+    <arg name="cam_port" default="" />
+
+    <!-- Launch a usb_cam_node with the given name on given port -->
+    <node pkg="usb_cam" type="usb_cam_node" name="$(arg cam_name)" >
+        <param name="video_device" value="$(arg cam_port)"/>
+        <param name="image_width" value="640" />
+        <param name="image_height" value="480" />
+        <param name="pixel_format" value="yuyv" />
+    </node>
+    
+</launch>

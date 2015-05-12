@@ -25,7 +25,7 @@
         <param name="publish_filtered_gps" value="false" />
 
         <!-- Whether to publish transform between UTM grid and frame of input odometry data -->
-        <param name="broadcast_utm_transform" value="false"/>
+        <param name="broadcast_utm_transform" value="true"/>
 
         <!-- Whether to use heading from odometry message instead of IMU -->
         <param name="use_odometry_yaw" value="true" />
