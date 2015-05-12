@@ -112,7 +112,6 @@ def set_all_covariance(imu_msg, covariance_matrix):
         imu_msg.linear_acceleration_covariance[i] = covariance_matrix[i]
 
 if __name__ == '__main__':
-    rospy.loginfo("Why isn't this working?")
     # Initialize node
     rospy.init_node("ahrs8_node")
     # Initialize publisher
