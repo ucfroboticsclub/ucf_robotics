@@ -1,5 +1,10 @@
 <!-- Launch file to bring up serial communications with the AHRS-8 -->
 <launch>
+    <!-- Launch configuration -->
+    <arg name="port" default="/dev/ttyUSB0" />
+    <arg name="baud" default="115200" />
+
+    <!-- Launch an AHRS-8 node. -->
     <node name="ahrs8" pkg="core_sparton" type="ahrs8_nmea.py">
         <param name="port" value="/dev/sparton/ahrs8"/>
         <param name="baud" value="115200"/>

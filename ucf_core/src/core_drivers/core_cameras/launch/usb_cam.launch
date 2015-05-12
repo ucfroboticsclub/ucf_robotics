@@ -3,7 +3,7 @@
 
     <!-- Arguments necessary to distinguish and locate camera -->
     <arg name="cam_name" default="camera" />
-    <arg name="cam_port" default="" />
+    <arg name="cam_port" default="/dev/video0" />
 
     <!-- Launch a usb_cam_node with the given name on given port -->
     <node pkg="usb_cam" type="usb_cam_node" name="$(arg cam_name)" >

@@ -1,8 +1,15 @@
 <!-- Launch file for a generic GPS device implementing NMEA -->
+
 <launch>
+    <!-- Necessary arguments for using the GPS device on a vehicle -->
+    <arg name="port" default="/dev/ttyUSB0" />
+    <arg name="baud" default="9600" />
+    <arg name="frame_id" default="gps" />
+
+    <!-- Launch navsat driver node -->
     <node pkg="nmea_navsat_driver" type="nmea_serial_driver" name="nmea_gps" >
-        <param name="port" value="/dev/ttyUSB0"/>
-        <param name="baud" value="9600"/>
-        <param name="frame_id" value="minimax_gps"/>
+        <param name="port" value="$(arg port)"/>
+        <param name="baud" value="$(arg baud)"/>
+        <param name="frame_id" value="$(arg frame_id)"/>
     </node>
 </launch>
