@@ -1,0 +1,76 @@
+<!-- Launch file for IGVC localization using GPS and fused odometry data. -->
+
+<!-- Inputs:
+                IMU data
+                Wheel odometry data
+                Output from navsat transform
+
+     Outputs:   
+                Fused estimate of robot state containing discrete input-->
+
+<launch>
+
+    <!-- Node fusing output of other localization node with GPS output -->
+
+    <node name="igvc_localization_discrete" pkg="robot_localization" type="ekf_localization_node" clear_params="true">
+        <!-- The frequency to attempt to publish position information at. -->
+        <param name="frequency" value="30"/>
+        <!-- The time we allow for a sensor to provide new data before timing out. -->
+        <param name="sensor_timeout" value="0.1"/>
+        <!-- Whether we want to ignore small 3D variations. -->
+        <param name="two_d_mode" value="true"/>
+        <!-- Coordinate frames. -->
+        <param name="map_frame" value="map"/>
+        <!-- Odometry frame. -->
+        <param name="odom_frame" value="odom"/>
+        <!-- Robot base frame. -->
+        <param name="base_link_frame" value="base_footprint"/>
+        <!-- Frame that depends if we are fusing GPS data or not. -->
+        <!-- If we're fusing GPS data, set world_frame to the map_frame value and use a separate
+             node to publish the odom->base_link_frame transform. -->
+        <!-- Otherwise set this to the odom frame value. -->
+        <param name="world_frame" value="map"/>
+
+        <!-- Specify inputs to use and their topics.  Supported values are odomN, twistN, imuN, poseN.  
+             Note that twist and pose are the covariancestamped varieties. -->
+        <param name="imu0" value="imu/data"/>
+        <param name="odom0" value="placeholder/odom"/>
+        <param name="odom1" value="odometry/gps"/>
+
+        <!-- Configuration of the inputs specified above.  Matrix defining what to use in estimates. -->
+        <!-- Values are laid out as shown below:
+             [x, y, z, 
+              roll, pitch, yaw, 
+              x_vel, y_vel, z_vel, 
+              roll_vel, pitch_vel, yaw_vel, 
+              x_accel, y_accel, z_accel] -->
+
+        <rosparam param="imu0_config">[false, false, false,
+                                       true, true, true,
+                                       false, false, false,
+                                       true, true, true,
+                                       true, true, true]</rosparam>
+
+        <rosparam param="odom0_config">[false, false, false,
+                                        false, false, false,
+                                        true, false, false,
+                                        false, false, false,
+                                        false, false, false]</rosparam>
+
+        <rosparam param="odom1_config">[true, true, false,
+                                        false, false, false,
+                                        false, false, false,
+                                        false, false, false,
+                                        false, false, false]</rosparam>
+
+        <!-- Whether to use the sensors capable of absolute measurements in differential mode. -->
+        <!-- More reading needs to be done here, false for now.  Note Twist has no absolute values. -->
+        <param name="imu0_differential" value="false"/>
+        <param name="odom0_differential" value="false"/>
+        <param name="odom1_differential" value="false"/>
+
+        <!-- Remap output -->
+        <!-- <remap from="odometry/filtered" to="odometry/filtered"/> -->
+    </node>
+
+</launch>
