@@ -1,7 +1,0 @@
-<!-- Launch file to bring up serial communications with the AHRS-8 -->
-<launch>
-    <node name="ahrs8" pkg="core_sparton" type="ahrs8_nmea.py">
-        <param name="port" value="/dev/ttyUSB0"/>
-        <param name="baud" value="115200"/>
-    </node>
-</launch>

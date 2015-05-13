@@ -14,7 +14,6 @@ Each folder below this directory is a ROS workspace.  Links to each workspace ar
 * [ucf_igvc](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_igvc)
 * [ucf_sub](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_sub)
 * [ucf_boat](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_boat)
-* [ucf_turtlebot](https://github.com/ucfroboticsclub/ucf_robotics/tree/master/ucf_turtlebot)
 
 ## <a name="getting-started"></a>Getting Started
 If you're completely new, follow these steps to get up and running with our current builds.

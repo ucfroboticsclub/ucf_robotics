@@ -1,0 +1,9 @@
+<!-- Default launch file for the waypoint manager. -->
+<!-- Arguements:
+     filepath: path to input file used for intial waypoints.  -->
+<launch>
+    <arg name="filepath" default="$(find waypoint_manager)/config/sample_input.txt" />
+    <node pkg="waypoint_manager" type="waypoint_manager_node" name="waypoint_manager">
+        <param name="waypoint_file" value="$(arg filepath)" />
+    </node>
+</launch>
