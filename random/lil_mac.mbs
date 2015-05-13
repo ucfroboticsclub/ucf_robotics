@@ -8,65 +8,103 @@ MAX_CHANNELS=2
 
 setconfig(_ECHOF, 1) ' Serial echo off (p195)
 setconfig(_RWD, 110) ' Watchdog timeout, milliseconds (p195)
-setconfig(_AMOD, 1, 1) ' Analog input 1 absolute mode
-setconfig(_AMOD, 2, 1) ' Analog input 2 absolute mode
 
 ' Undervoltage/overvoltage limits (p214)
 setconfig(_OVL, 350)
 setconfig(_UVL, 50)
 
+' Encoder to Wheel is 32:1
 ' Encoder, speed config (p208, p221)
-setconfig(_EMOD, 1, 50)
-setconfig(_EPPR, 1, 1024)
-setconfig(_MXRPM, 1, 3500)
+setconfig(_EMOD, 1, 18)	
+setconfig(_EPPR, 1, 180) ' Encoder Pulses Per Rev / Cycles Per Rev ( CPR = 180 )
+setconfig(_MXRPM, 1, 4200) ' Assumes gear ratio of 32.67:1
 
 ' Current limit (p216)
-setconfig(_ALIM, 1, 1500)
+setconfig(_ALIM, 1, 350)
 setconfig(_ATGA, 1, 2000)
 setconfig(_ATGD, 1, 50)
 setconfig(_ATRIG, 1, 0)
 
 ' Max acceleration/deceleration (p219)
-setconfig(_MAC, 1, 20000)
-setconfig(_MDEC, 1, 20000)
+setconfig(_MAC, 1, 15000)
+setconfig(_MDEC, 1, 15000)
 
 ' Closed-loop control (p216-218)
-setconfig(_MMOD, 1, 1)
-setconfig(_KP, 1, 20)
-setconfig(_KI, 1, 40)
-setconfig(_KD, 1, 10)
+setconfig(_MMOD, 1, 1) ' Closed-loop Speed
+setconfig(_KP, 1, 0)
+setconfig(_KI, 1, 10)
+setconfig(_KD, 1, 0)
 setconfig(_ICAP, 1, 100)
 setconfig(_CLERD, 1, 0)
 
 '-----------------------------------------------------------------------------------------------------------
 
+
+' Encoder to Wheel is 32:1
 ' Encoder, speed config (p208, p221)
-setconfig(_EMOD, 2, 50)
-setconfig(_EPPR, 2, 1024)
-setconfig(_MXRPM, 2, 3500)
+setconfig(_EMOD, 2, 34)
+setconfig(_EPPR, 2, 180)
+setconfig(_MXRPM, 2, 4200)
 
 ' Current limit (p216)
-setconfig(_ALIM, 2, 1500)
+setconfig(_ALIM, 2, 350)
 setconfig(_ATGA, 2, 2000)
 setconfig(_ATGD, 2, 50)
 setconfig(_ATRIG, 2, 0)
 
 ' Max acceleration/deceleration (p219)
-setconfig(_MAC, 2, 20000)
-setconfig(_MDEC, 2, 20000)
+setconfig(_MAC, 2, 15000)
+setconfig(_MDEC, 2, 15000)
 
 ' Closed-loop control (p216-218)
 setconfig(_MMOD, 2, 1)
-setconfig(_KP, 2, 20)
-setconfig(_KI, 2, 40)
-setconfig(_KD, 2, 10)
+setconfig(_KP, 2, 0)
+setconfig(_KI, 2, 10)
+setconfig(_KD, 2, 0)
 setconfig(_ICAP, 2, 100)
 setconfig(_CLERD, 2, 0)
 
+
+'User-variable to control command-control
+setcommand(_VAR, 0, 0)
+
+setcommand(_BOOL, 5, 0)
+
+setcommand(_BOOL, 6, 0)
+setcommand(_D0, 1)
+
 top:
-	if getvalue(_DI, 5) = 1 then
-		Throttle = getvalue(_CIP, 2)
-		Steering = getvalue(_CIP, 1)
+		
+	EStop = getvalue(_BOOL, 5) ' Boolean set via serial
+		
+	ForceRC = getvalue(_DI, 6)
+	if ForceRC = 1 then
+		EStop = 0
+	end if
+	
+	
+	' EStop
+	if ( getvalue(_PI, 3) < 1700 Or EStop ) then
+		setcommand(_EX, 0)
+		wait(5)
+		goto top
+	else
+		setcommand(_MG, 0)
+	end if
+	
+
+	' Man/Autonomous switch
+	if getvalue(_PI, 4) > 1700 then
+		setcommand(_BOOL, 6, 1)
+		setcommand(_D1, 1)
+	else
+		setcommand(_BOOL, 6, 0)
+		setcommand(_D0, 1)
+	end if
+		
+	if ForceRC = 1 then
+		Throttle = getvalue(_CIP, 1)
+		Steering = getvalue(_CIP, 2)
 		
 		setcommand(_G, 1, Throttle)
 		setcommand(_G, 2, Steering)
@@ -74,9 +112,9 @@ top:
 		wait(10)
 	else
 		for ch = 1 andwhile ch <= MAX_CHANNELS evaluate ch++
-		if getvalue(_BOOL, ch) = 1 then
-			GoSub PrintFeedback  ' 25 Hz
-		end if
+			if getvalue(_BOOL, ch) = 1 then
+				GoSub PrintFeedback  ' 25 Hz
+			end if
 		next
 		c++
 		if c = 5 then
@@ -86,6 +124,7 @@ top:
 		wait(19)
 	end if
 	goto top
+	
 
 PrintFeedback:
 	print("&f:", ch)
