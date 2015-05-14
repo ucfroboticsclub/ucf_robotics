@@ -41,6 +41,7 @@ VelocityController::VelocityController(std::string cmd_topic, std::vector<std::s
     right_motor_pub_ = nh_.advertise<roboteq_msgs::Command>(namespaces[1] + "/cmd", 1);
 
     cmd_vel_topic_ = nh_.subscribe(cmd_topic, 1, &VelocityController::cmd_vel_callback, this);
+
 }
 
 VelocityController::~VelocityController()
@@ -54,6 +55,7 @@ void VelocityController::cmd_vel_callback(const geometry_msgs::Twist &msg)
 
     double linear_velocity_x = msg.linear.x;	// linear x m/s
     double angular_velocity_z = msg.angular.z; 	// yaw rad/s
+
 
     double linear_contribution = linear_velocity_x / wheel_radius_;
     double angular_contribution = angular_velocity_z * base_radius_ / wheel_radius_;
