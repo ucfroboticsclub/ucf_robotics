@@ -65,7 +65,6 @@ namespace igvc {
 
         //pid
         pid linear_velocity_pid_, angular_velocity_pid_;
-        boost::mutex *linear_mutex_, *angular_mutex_;
 
         //Callbacks
         void cmd_vel_callback(const geometry_msgs::Twist &msg);

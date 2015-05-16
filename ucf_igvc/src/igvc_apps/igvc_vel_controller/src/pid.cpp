@@ -34,6 +34,7 @@ DAMAGE.
  */
 #include "pid.h"
 #include "boost/timer.hpp"
+//#include <iostream>
 
 pid::pid(float kp, float ki, float kd)
         : ki_(ki), kp_(kp), kd_(kd),
@@ -73,6 +74,8 @@ void pid::run()
         double derivative = (error - previous_error) / dt;
         output_ = kp_ * error + ki_ * integral + kd_ * derivative;
         previous_error = error;
+       // std::cout << "S: " << setpoint_ << " A: " << actual_ << " O: " << output_ << " E: " << error << std::endl;
+
         mutex_.unlock();
 
         boost::this_thread::sleep(time);

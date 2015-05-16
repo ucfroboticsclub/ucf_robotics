@@ -37,7 +37,7 @@ namespace igvc {
                                            double wheel_radius,
                                            double base_radius)
             : nh_(), base_radius_(base_radius), wheel_radius_(wheel_radius),
-              linear_velocity_pid_(0, 1, 0), angular_velocity_pid_(0, 1, 0)
+              linear_velocity_pid_(.1, 0, 0), angular_velocity_pid_(.1, 0, 0)
     {
         left_motor_pub_ = nh_.advertise<roboteq_msgs::Command>(
                 namespaces[0] + "/cmd", 1);
@@ -48,7 +48,7 @@ namespace igvc {
                                        &VelocityController::cmd_vel_callback,
                                        this);
 
-        odom_topic_ = nh_.subscribe("odom", 1,
+        odom_topic_ = nh_.subscribe("/odom", 1,
                                     &VelocityController::odom_callback, this);
 
         linear_velocity_pid_.start();
@@ -66,13 +66,8 @@ namespace igvc {
         double linear_velocity_x = msg.linear.x;    // linear x m/s
         double angular_velocity_z = msg.angular.z;    // yaw rad/s
 
-
-        double linear_contribution = linear_velocity_x / wheel_radius_;
-        double angular_contribution =
-                (angular_velocity_z * base_radius_) / wheel_radius_;
-
-        linear_velocity_pid_.SetDesired(linear_contribution);
-        angular_velocity_pid_.SetDesired(angular_contribution);
+        linear_velocity_pid_.SetDesired(linear_velocity_x);
+        angular_velocity_pid_.SetDesired(angular_velocity_z);
 
     }
 
@@ -82,6 +77,8 @@ namespace igvc {
         double linear_velocity = msg.twist.twist.linear.x;
         double angular_velocity = msg.twist.twist.angular.z;
 
+       // std::cout << "Actual: " << linear_velocity << std::endl;
+
         linear_velocity_pid_.SetActual(linear_velocity);
         angular_velocity_pid_.SetActual(angular_velocity);
     }
@@ -90,8 +87,8 @@ namespace igvc {
     void VelocityController::publish()
     {
 
-        double linear_velocity = linear_velocity_pid_.GetOutput();
-        double angular_velocity = angular_velocity_pid_.GetOutput();
+        double linear_velocity = linear_velocity_pid_.GetOutput() / wheel_radius_;
+        double angular_velocity = (angular_velocity_pid_.GetOutput() * base_radius_) / wheel_radius_;
 
 
         roboteq_msgs::Command left_cmd, right_cmd;

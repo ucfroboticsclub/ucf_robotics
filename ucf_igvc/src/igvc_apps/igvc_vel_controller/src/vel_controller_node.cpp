@@ -45,7 +45,7 @@ int main(int argc, char **argv)
     if (!nh.getParam("cmd_vel_topic", cmd_vel_topic))
     {
         ROS_INFO(
-                "No Command Velocit, left_motor_topic, right_motor_topic;y topics provided using default -- /cmd_vel");
+                "No Command Velocity, left_motor_topic, right_motor_topic topics provided using default -- /cmd_vel");
         cmd_vel_topic = "/cmd_vel";
     }
 
@@ -67,15 +67,18 @@ int main(int argc, char **argv)
     namespaces.push_back((std::string) channels[0]);
     namespaces.push_back((std::string) channels[1]);
 
+
     if (!nh.getParam("wheel_radius", wheel_radius))
     {
         ROS_INFO("No wheel radius provided");
+        wheel_radius = 0.15875;
         return -1;
     }
 
     if (!nh.getParam("base_radius", base_radius))
     {
         ROS_INFO("No radius prodived for base of robot");
+        base_radius = 0.35560;
         return -1;
     }
 
@@ -87,7 +90,6 @@ int main(int argc, char **argv)
     {
         ros::spinOnce();
         vc.publish();
-
         sleep_rate.sleep();
     }
 
