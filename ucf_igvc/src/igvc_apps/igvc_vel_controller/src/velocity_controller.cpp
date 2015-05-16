@@ -30,42 +30,78 @@ DAMAGE.
 
 #include "../include/igvc_vel_controller/velocity_controller.h"
 
-namespace igvc
-{
+namespace igvc {
 
-VelocityController::VelocityController(std::string cmd_topic, std::vector<std::string> namespaces,
-                                       double wheel_radius, double base_radius)
- : nh_(), base_radius_(base_radius), wheel_radius_(wheel_radius)
-{
-    left_motor_pub_ = nh_.advertise<roboteq_msgs::Command>(namespaces[0] + "/cmd", 1);
-    right_motor_pub_ = nh_.advertise<roboteq_msgs::Command>(namespaces[1] + "/cmd", 1);
+    VelocityController::VelocityController(std::string cmd_topic,
+                                           std::vector<std::string> namespaces,
+                                           double wheel_radius,
+                                           double base_radius)
+            : nh_(), base_radius_(base_radius), wheel_radius_(wheel_radius),
+              linear_velocity_pid_(0, 1, 0), angular_velocity_pid_(0, 1, 0)
+    {
+        left_motor_pub_ = nh_.advertise<roboteq_msgs::Command>(
+                namespaces[0] + "/cmd", 1);
+        right_motor_pub_ = nh_.advertise<roboteq_msgs::Command>(
+                namespaces[1] + "/cmd", 1);
 
-    cmd_vel_topic_ = nh_.subscribe(cmd_topic, 1, &VelocityController::cmd_vel_callback, this);
+        cmd_vel_topic_ = nh_.subscribe(cmd_topic, 1,
+                                       &VelocityController::cmd_vel_callback,
+                                       this);
 
-}
+        odom_topic_ = nh_.subscribe("odom", 1,
+                                    &VelocityController::odom_callback, this);
 
-VelocityController::~VelocityController()
-{
+        linear_velocity_pid_.start();
+        angular_velocity_pid_.start();
 
-}
+    }
 
-void VelocityController::cmd_vel_callback(const geometry_msgs::Twist &msg)
-{
-    //TODO: Add PID Controllers for both velocity vectors
+    VelocityController::~VelocityController()
+    {
 
-    double linear_velocity_x = msg.linear.x;	// linear x m/s
-    double angular_velocity_z = msg.angular.z; 	// yaw rad/s
+    }
+
+    void VelocityController::cmd_vel_callback(const geometry_msgs::Twist &msg)
+    {
+        double linear_velocity_x = msg.linear.x;    // linear x m/s
+        double angular_velocity_z = msg.angular.z;    // yaw rad/s
 
 
-    double linear_contribution = linear_velocity_x / wheel_radius_;
-    double angular_contribution = angular_velocity_z * base_radius_ / wheel_radius_;
+        double linear_contribution = linear_velocity_x / wheel_radius_;
+        double angular_contribution =
+                (angular_velocity_z * base_radius_) / wheel_radius_;
 
-    roboteq_msgs::Command left_cmd, right_cmd;
-    left_cmd.commanded_velocity = linear_contribution + angular_contribution;
-    right_cmd.commanded_velocity = linear_contribution - angular_contribution;
+        linear_velocity_pid_.SetDesired(linear_contribution);
+        angular_velocity_pid_.SetDesired(angular_contribution);
 
-    left_motor_pub_.publish(left_cmd);
-    right_motor_pub_.publish(right_cmd);
-}
+    }
+
+
+    void VelocityController::odom_callback(const nav_msgs::Odometry &msg)
+    {
+        double linear_velocity = msg.twist.twist.linear.x;
+        double angular_velocity = msg.twist.twist.angular.z;
+
+        linear_velocity_pid_.SetActual(linear_velocity);
+        angular_velocity_pid_.SetActual(angular_velocity);
+    }
+
+
+    void VelocityController::publish()
+    {
+
+        double linear_velocity = linear_velocity_pid_.GetOutput();
+        double angular_velocity = angular_velocity_pid_.GetOutput();
+
+
+        roboteq_msgs::Command left_cmd, right_cmd;
+        left_cmd.commanded_velocity = linear_velocity + angular_velocity;
+        right_cmd.commanded_velocity = linear_velocity - angular_velocity;
+
+        left_motor_pub_.publish(left_cmd);
+        right_motor_pub_.publish(right_cmd);
+
+    }
+
 
 }

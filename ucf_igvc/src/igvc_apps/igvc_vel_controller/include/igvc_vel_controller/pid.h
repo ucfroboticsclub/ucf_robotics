@@ -26,53 +26,48 @@ DAMAGE.
 
 @author Thomas Watters (thomaswatters@knights.ucf.edu)
 
- */
+*/
 
-#include <ros/ros.h>
-#include <geometry_msgs/Twist.h>
-#include <roboteq_msgs/Command.h>
-#include <vector>
-#include "pid.h"
+#ifndef PROJECT_PID_H
+#define PROJECT_PID_H
+
 #include "boost/thread/thread.hpp"
-#include <nav_msgs/Odometry.h>
-
-namespace igvc {
-
-    class VelocityController {
-    public:
-        VelocityController(std::string, std::vector<std::string>, double,
-                           double);
-
-        ~VelocityController();
+#include "boost/thread/mutex.hpp"
 
 
-        void publish();
+class pid {
 
-    private:
+private:
+    float ki_, kp_, kd_;
+    double setpoint_, actual_, output_;
 
-        ros::NodeHandle nh_;
-        //Topic containing geometryTwist for vehicle velocity input
-        ros::Subscriber cmd_vel_topic_;
+    bool running_;
 
-        ros::Subscriber odom_topic_;
-
-        //Topics that the roboteq driver is listening to
-        ros::Publisher left_motor_pub_;
-        ros::Publisher right_motor_pub_;
-
-        //Vehicle dimensions required for calculations
-        double wheel_radius_, base_radius_;
-
-        //pid
-        pid linear_velocity_pid_, angular_velocity_pid_;
-        boost::mutex *linear_mutex_, *angular_mutex_;
-
-        //Callbacks
-        void cmd_vel_callback(const geometry_msgs::Twist &msg);
-
-        void odom_callback(const nav_msgs::Odometry &msg);
+    //thread
+    boost::thread *thr_;
+    boost::mutex mutex_;
 
 
-    };
+public:
 
-}
+    //constructor
+    pid(float ki, float kp, float kd);
+
+    ~pid();
+
+    void SetDesired(double val);
+
+    void SetActual(double val);
+
+    //getters
+    double GetOutput();
+
+    void start();
+
+    void run();
+
+    void join();
+
+};
+
+#endif //PROJECT_PID_H
