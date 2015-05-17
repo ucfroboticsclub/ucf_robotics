@@ -37,7 +37,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define FROM_RPM(x) (double(x) * (2 * M_PI) / 60)
 
 
-const int wheel_to_encoder_ratio = 32;
 namespace roboteq {
 
 Channel::Channel(int channel_num, std::string ns, Controller* controller) :
@@ -51,7 +50,7 @@ Channel::Channel(int channel_num, std::string ns, Controller* controller) :
 
 void Channel::cmdCallback(const roboteq_msgs::Command& command) {
   // First convert the user's command from rad/s to RPM.
-  int commanded_rpm = int(TO_RPM(command.commanded_velocity)) * wheel_to_encoder_ratio ;
+  int commanded_rpm = int(TO_RPM(command.commanded_velocity)) * 32 ;
 
   if(abs(commanded_rpm) > max_rpm_)
   {
@@ -64,7 +63,7 @@ void Channel::cmdCallback(const roboteq_msgs::Command& command) {
 
   // Now get the -1000 .. 1000 command as a proportion of the maximum RPM.
   //int roboteq_command = int((commanded_rpm / max_rpm_) * 1000.0);
-  ROS_DEBUG_STREAM("Sending command value of " << commanded_rpm << " to motor driver.");
+  ROS_INFO_STREAM("Sending command value of " << commanded_rpm << " to motor driver.");
 
   // Write the command.
   controller_->command << "G" << channel_num_ << commanded_rpm << controller_->send;
