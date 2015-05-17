@@ -315,14 +315,16 @@ namespace roboteq {
     bool Controller::eStopService(std_srvs::EmptyRequest &req,
                                   std_srvs::EmptyResponse &res)
     {
-        setEstop();
+        //Script on roboteq uses user Boolean 5 to control Estop
+        setUserBool(5, 1);
         return true;
     }
 
     bool Controller::resumeService(std_srvs::EmptyRequest &req,
                                    std_srvs::EmptyResponse &res)
     {
-        resetEstop();
+        //Script on roboteq uses user Boolean 5 to control Estop
+        setUserBool(5, 0);
         return true;
     }
 }  // namespace roboteq
