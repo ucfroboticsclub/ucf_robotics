@@ -28,7 +28,7 @@ DAMAGE.
 
 */
 
-#include "../include/igvc_vel_controller/velocity_controller.h"
+#include "igvc_vel_controller/velocity_controller.h"
 
 namespace igvc {
 
@@ -87,13 +87,13 @@ namespace igvc {
     void VelocityController::publish()
     {
 
-        double linear_velocity = linear_velocity_pid_.GetOutput() / wheel_radius_;
-        double angular_velocity = (angular_velocity_pid_.GetOutput() * base_radius_) / wheel_radius_;
+        double linear_contribution = linear_velocity_pid_.GetOutput() / wheel_radius_;
+        double angular_contribution = (angular_velocity_pid_.GetOutput() * base_radius_) / wheel_radius_;
 
 
         roboteq_msgs::Command left_cmd, right_cmd;
-        left_cmd.commanded_velocity = linear_velocity + angular_velocity;
-        right_cmd.commanded_velocity = linear_velocity - angular_velocity;
+        left_cmd.commanded_velocity = linear_contribution + angular_contribution;
+        right_cmd.commanded_velocity = linear_contribution - angular_contribution;
 
         left_motor_pub_.publish(left_cmd);
         right_motor_pub_.publish(right_cmd);

@@ -1,3 +1,6 @@
+#ifndef PROJECT_VELOCITY_CONTROLLER_H
+#define PROJECT_VELOCITY_CONTROLLER_H
+
 /**
 
 Copyright (c) 2015, Robotics Club @ UCF
@@ -26,48 +29,41 @@ DAMAGE.
 
 @author Thomas Watters (thomaswatters@knights.ucf.edu)
 
-*/
+ */
 
-#ifndef PROJECT_PID_H
-#define PROJECT_PID_H
-
-#include <boost/thread/mutex.hpp>
-#include <boost/thread/thread.hpp>
-
-
-class pid {
-
-private:
-    float ki_, kp_, kd_;
-    double setpoint_, actual_, output_;
-
-    bool running_;
-
-    //thread
-    boost::thread *thr_;
-    boost::mutex mutex_;
+#include <ros/ros.h>
+#include <geometry_msgs/Twist.h>
+#include <roboteq_msgs/Command.h>
+#include <vector>
 
 
-public:
+namespace igvc
+{
 
-    //constructor
-    pid(float ki, float kp, float kd);
+    class VelocityController
+    {
+    public:
+        VelocityController(std::string, std::vector< std::string >, double, double);
+        ~VelocityController();
 
-    ~pid();
+    private:
 
-    void SetDesired(double val);
+        ros::NodeHandle nh_;
+        //Topic containing geometryTwist for vehicle velocity input
+        ros::Subscriber cmd_vel_topic_;
 
-    void SetActual(double val);
+        //Topics that the roboteq driver is listening to
+        ros::Publisher left_motor_pub_;
+        ros::Publisher right_motor_pub_;
 
-    //getters
-    double GetOutput();
+        //Vehicle dimensions required for calculations
+        double wheel_radius_, base_radius_;
 
-    void start();
+        //Callbacks
+        void cmd_vel_callback(const geometry_msgs::Twist& msg);
 
-    void run();
+    };
 
-    void join();
+}
 
-};
-
-#endif //PROJECT_PID_H
+#endif //PROJECT_VELOCITY_CONTROLLER_H

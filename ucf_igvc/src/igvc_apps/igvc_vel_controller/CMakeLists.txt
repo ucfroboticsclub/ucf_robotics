@@ -40,7 +40,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
-  include/igvc_vel_controller/
+  include/
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -54,7 +54,18 @@ file(GLOB_RECURSE HEADERS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINKS i
 
 ## Declare a cpp executable
 # add_executable(igvc_vel_controller_node src/igvc_vel_controller_node.cpp)
-add_executable(vel_controller_node ${HEADERS} ${SOURCES})
+add_executable(vel_controller_node_pid
+include/igvc_vel_controller/pid.h
+include/igvc_vel_controller/velocity_controller.h
+src/vel_controller_node.cpp
+src/velocity_controller.cpp
+src/pid.cpp
+)
+
+add_executable(vel_controller_node_nopid
+include/igvc_vel_controller_nopid/velocity_controller.h
+src/no_pid/velocity_controller.cpp
+src/no_pid/vel_controller_node_nopid.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -64,7 +75,8 @@ add_executable(vel_controller_node ${HEADERS} ${SOURCES})
 # target_link_libraries(igvc_vel_controller_node
 #   ${catkin_LIBRARIES}
 # )
-target_link_libraries(vel_controller_node ${catkin_LIBRARIES})
+target_link_libraries(vel_controller_node_pid ${catkin_LIBRARIES})
+target_link_libraries(vel_controller_node_nopid ${catkin_LIBRARIES})
 
 #############
 ## Install ##

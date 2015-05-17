@@ -31,7 +31,7 @@ DAMAGE.
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include <roboteq_msgs/Command.h>
-#include "velocity_controller.h"
+#include "igvc_vel_controller/velocity_controller.h"
 
 
 int main(int argc, char **argv)

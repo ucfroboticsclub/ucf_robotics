@@ -1,5 +1,5 @@
 <launch>
-	<arg name="port" default="/dev/ttyUSB0" />
+	<arg name="port" default="/dev/roboteq" />
 	<arg name="baud" default="115200" />
 	<arg name="channels" default="[left_motor, right_motor]" />
 	<arg name="wheel_radius" default="0.15875" />
@@ -12,7 +12,7 @@
 		<rosparam param="channels" subst_value="True">$(arg channels)</rosparam>
 	</node>
 
-	<node pkg="igvc_vel_controller" type="vel_controller_node" name="vel_controller" output="screen">
+	<node pkg="igvc_vel_controller" type="vel_controller_node_nopid" name="vel_controller" output="screen">
 		<rosparam param="channels" subst_value="True">$(arg channels)</rosparam>
 		<rosparam param="wheel_radius" subst_value="True">$(arg wheel_radius)</rosparam>
 		<rosparam param="base_radius" subst_value="True">$(arg base_radius)</rosparam>

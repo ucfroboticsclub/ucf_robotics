@@ -26,48 +26,60 @@ DAMAGE.
 
 @author Thomas Watters (thomaswatters@knights.ucf.edu)
 
-*/
+ */
 
-#ifndef PROJECT_PID_H
-#define PROJECT_PID_H
+#include <ros/ros.h>
+#include <geometry_msgs/Twist.h>
+#include <roboteq_msgs/Command.h>
+#include "igvc_vel_controller_nopid/velocity_controller.h"
 
-#include <boost/thread/mutex.hpp>
-#include <boost/thread/thread.hpp>
+int main(int argc, char** argv)
+{
+	ROS_INFO("Starting vel_controller_node");
+	ros::init(argc, argv, "~");
+	ros::NodeHandle nh("~");
 
+    std::string cmd_vel_topic;
+    double wheel_radius, base_radius;
+	if( !nh.getParam("cmd_vel_topic", cmd_vel_topic) )
+	{
+        ROS_INFO("No Command Velocit, left_motor_topic, right_motor_topic;y topics provided using default -- /cmd_vel");
+		cmd_vel_topic = "/cmd_vel" ;
+	}
 
-class pid {
+	if(!nh.hasParam("channels"))
+	{
+		ROS_INFO("No Motor Channels Provided");
+		return -1;
+    }
 
-private:
-    float ki_, kp_, kd_;
-    double setpoint_, actual_, output_;
+	XmlRpc::XmlRpcValue channels;
+	nh.param("channels", channels, channels);
+	if(channels.size() != 2)
+	{
+		ROS_INFO("Invalid Number of Motor Channels");
+		return -1;
+	}
 
-    bool running_;
+    std::vector< std::string > namespaces;
+    namespaces.push_back((std::string)channels[0]);
+    namespaces.push_back((std::string)channels[1]);
 
-    //thread
-    boost::thread *thr_;
-    boost::mutex mutex_;
+	if( !nh.getParam("wheel_radius", wheel_radius ) )
+	{
+		ROS_INFO("No wheel radius provided");
+		return -1;
+	}
 
+	if( !nh.getParam("base_radius", base_radius ))
+	{
+		ROS_INFO("No radius prodived for base of robot");
+		return  -1;
+	}
 
-public:
+    igvc::VelocityController vc(cmd_vel_topic,namespaces,wheel_radius, base_radius);
 
-    //constructor
-    pid(float ki, float kp, float kd);
+	ros::spin();
 
-    ~pid();
-
-    void SetDesired(double val);
-
-    void SetActual(double val);
-
-    //getters
-    double GetOutput();
-
-    void start();
-
-    void run();
-
-    void join();
-
-};
-
-#endif //PROJECT_PID_H
+	return 0;
+}

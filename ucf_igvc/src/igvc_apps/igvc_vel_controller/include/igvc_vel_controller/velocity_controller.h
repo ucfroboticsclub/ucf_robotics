@@ -32,8 +32,8 @@ DAMAGE.
 #include <geometry_msgs/Twist.h>
 #include <roboteq_msgs/Command.h>
 #include <vector>
-#include "pid.h"
-#include "boost/thread/thread.hpp"
+#include "igvc_vel_controller/pid.h"
+//#include <boost/thread/thread.hpp>
 #include <nav_msgs/Odometry.h>
 
 namespace igvc {

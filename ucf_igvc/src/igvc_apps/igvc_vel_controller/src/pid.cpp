@@ -32,7 +32,7 @@ DAMAGE.
 /*
  * Implements a PID Controller. Control loop is threaded.
  */
-#include "pid.h"
+#include "igvc_vel_controller/pid.h"
 #include "boost/timer.hpp"
 //#include <iostream>
 
