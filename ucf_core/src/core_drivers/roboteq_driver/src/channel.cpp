@@ -36,10 +36,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define TO_RPM(x) (double(x) * 60 / (2 * M_PI))
 #define FROM_RPM(x) (double(x) * (2 * M_PI) / 60)
 
+
+const int wheel_to_encoder_ratio = 32;
 namespace roboteq {
 
 Channel::Channel(int channel_num, std::string ns, Controller* controller) :
-  channel_num_(channel_num), nh_(ns), controller_(controller), max_rpm_(3500)
+  channel_num_(channel_num), nh_(ns), controller_(controller), max_rpm_(4200)
 {
   sub_cmd_ = nh_.subscribe("cmd", 1, &Channel::cmdCallback, this);
   pub_feedback_ = nh_.advertise<roboteq_msgs::Feedback>("feedback", 1);
@@ -49,11 +51,20 @@ Channel::Channel(int channel_num, std::string ns, Controller* controller) :
 
 void Channel::cmdCallback(const roboteq_msgs::Command& command) {
   // First convert the user's command from rad/s to RPM.
-  double commanded_rpm = TO_RPM(command.commanded_velocity);
+  int commanded_rpm = int(TO_RPM(command.commanded_velocity)) * wheel_to_encoder_ratio ;
+
+  if(abs(commanded_rpm) > max_rpm_)
+  {
+    if(commanded_rpm < 0)
+      commanded_rpm = (-1)*max_rpm_;
+    else
+      commanded_rpm = max_rpm_;
+  }
+
 
   // Now get the -1000 .. 1000 command as a proportion of the maximum RPM.
-  int roboteq_command = int((commanded_rpm / max_rpm_) * 1000.0);
-  ROS_DEBUG_STREAM("Sending command value of " << roboteq_command << " to motor driver.");
+  //int roboteq_command = int((commanded_rpm / max_rpm_) * 1000.0);
+  ROS_DEBUG_STREAM("Sending command value of " << commanded_rpm << " to motor driver.");
 
   // Write the command.
   controller_->command << "G" << channel_num_ << commanded_rpm << controller_->send;

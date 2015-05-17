@@ -1,7 +1,7 @@
 <launch>
 	<arg name="port" default="/dev/roboteq" />
 	<arg name="baud" default="115200" />
-	<arg name="channels" default="[left_motor, right_motor]" />
+	<arg name="channels" default="[right_motor, left_motor]" />
 	<arg name="wheel_radius" default="0.15875" />
 	<arg name="base_radius" default="0.35560" />
 	<arg name="cmd_vel_topic" default="/cmd_vel" />

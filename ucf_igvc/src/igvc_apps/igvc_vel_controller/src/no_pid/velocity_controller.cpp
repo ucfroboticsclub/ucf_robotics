@@ -37,8 +37,8 @@ namespace igvc
                                            double wheel_radius, double base_radius)
             : nh_(), base_radius_(base_radius), wheel_radius_(wheel_radius)
     {
-        left_motor_pub_ = nh_.advertise<roboteq_msgs::Command>(namespaces[0] + "/cmd", 1);
-        right_motor_pub_ = nh_.advertise<roboteq_msgs::Command>(namespaces[1] + "/cmd", 1);
+        right_motor_pub_ = nh_.advertise<roboteq_msgs::Command>(namespaces[0] + "/cmd", 1);
+        left_motor_pub_ = nh_.advertise<roboteq_msgs::Command>(namespaces[1] + "/cmd", 1);
 
         cmd_vel_topic_ = nh_.subscribe(cmd_topic, 1, &VelocityController::cmd_vel_callback, this);
     }
