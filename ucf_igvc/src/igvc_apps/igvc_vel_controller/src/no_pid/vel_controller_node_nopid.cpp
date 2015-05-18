@@ -79,6 +79,16 @@ int main(int argc, char** argv)
 
     igvc::VelocityController vc(cmd_vel_topic,namespaces,wheel_radius, base_radius);
 
+
+	ros::Rate sleep_rate(10);
+	while(ros::ok())
+	{
+		vc.counter++;
+		ros::spinOnce();
+		if(vc.counter > 10)
+			vc.zero();
+	}
+
 	ros::spin();
 
 	return 0;

@@ -46,7 +46,13 @@ namespace igvc
         VelocityController(std::string, std::vector< std::string >, double, double);
         ~VelocityController();
 
-    private:
+
+        // watchdog
+        int counter;
+
+
+        void zero();
+    protected:
 
         ros::NodeHandle nh_;
         //Topic containing geometryTwist for vehicle velocity input
@@ -59,6 +65,8 @@ namespace igvc
         //Vehicle dimensions required for calculations
         double wheel_radius_, base_radius_;
 
+
+private:
         //Callbacks
         void cmd_vel_callback(const geometry_msgs::Twist& msg);
 

@@ -317,7 +317,7 @@ namespace roboteq {
     {
         //Script on roboteq uses user Boolean 5 to control Estop
 
-        for(int i = 0; i < channels_.size(); i++)
+        for(int i = 1; i <= channels_.size(); i++)
         {
             command << "G" << i << 0 << send;
             flush();

@@ -35,7 +35,7 @@ namespace igvc
 
     VelocityController::VelocityController(std::string cmd_topic, std::vector<std::string> namespaces,
                                            double wheel_radius, double base_radius)
-            : nh_(), base_radius_(base_radius), wheel_radius_(wheel_radius)
+            : nh_(), base_radius_(base_radius), wheel_radius_(wheel_radius), counter_(0)
     {
         right_motor_pub_ = nh_.advertise<roboteq_msgs::Command>(namespaces[0] + "/cmd", 1);
         left_motor_pub_ = nh_.advertise<roboteq_msgs::Command>(namespaces[1] + "/cmd", 1);
@@ -64,6 +64,20 @@ namespace igvc
 
         left_motor_pub_.publish(left_cmd);
         right_motor_pub_.publish(right_cmd);
+
+        counter = 0;
+    }
+
+
+    void VelocityController::zero()
+    {
+        roboteq_msgs::Command left, right;
+        left.commanded_velocity = 0;
+        right.commanded_velocity = 0;
+
+        left_motor_pub_.publish(left);
+        right_motor_pub_.publish(right);
+
     }
 
 }
