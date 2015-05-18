@@ -82,7 +82,6 @@ top:
 		EStop = 0
 	end if
 	
-	
 	' EStop
 	if ( getvalue(_PI, 3) < 1700 Or EStop ) then
 		setcommand(_EX, 0)
@@ -95,7 +94,8 @@ top:
 
 	' Man/Autonomous switch
 	if getvalue(_PI, 4) > 1700 then
-		setcommand(_BOOL, 6, 1)
+		' give a variable the computer can reference to get status of man/autonmous
+		setcommand(_BOOL, 6, 1) 
 		setcommand(_D1, 1)
 	else
 		setcommand(_BOOL, 6, 0)
@@ -103,6 +103,7 @@ top:
 	end if
 		
 	if ForceRC = 1 then
+		setcommand(_MXMD, 1)
 		Throttle = getvalue(_CIP, 1)
 		Steering = getvalue(_CIP, 2)
 		
@@ -111,6 +112,7 @@ top:
 		
 		wait(10)
 	else
+		setcommand(_MXMD, 0)
 		for ch = 1 andwhile ch <= MAX_CHANNELS evaluate ch++
 			if getvalue(_BOOL, ch) = 1 then
 				GoSub PrintFeedback  ' 25 Hz
