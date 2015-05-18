@@ -5,5 +5,5 @@
     <!-- Integrates continuous data (wheel odometry and IMU) to produce odometry estimate -->
     <include file="$(find igvc_localization)/launch/includes/igvc_localization_continuous.launch.xml"/>
     <!-- Integrates GPS with output of continous estimate to produce odometry estimate -->
-    <include file="$(find igvc_localization)/launch/includes/igvc_localization_discrete.launch.xml"/>
+    <!-- <include file="$(find igvc_localization)/launch/includes/igvc_localization_discrete.launch.xml"/> -->
 </launch>
