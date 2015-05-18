@@ -87,6 +87,7 @@ int main(int argc, char** argv)
 		ros::spinOnce();
 		if(vc.counter > 10)
 			vc.zero();
+		sleep_rate.sleep();
 	}
 
 	ros::spin();
