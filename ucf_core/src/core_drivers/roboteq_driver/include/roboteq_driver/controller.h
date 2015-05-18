@@ -105,6 +105,7 @@ namespace roboteq {
             }
 
             void operator<<(EOMSend) {
+                std::cout << ss << std::endl;
                 interface_->write(ss.str());
                 ss.str("");
             }
