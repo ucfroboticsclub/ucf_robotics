@@ -50,11 +50,11 @@ Channel::Channel(int channel_num, std::string ns, Controller* controller) :
 
 void Channel::cmdCallback(const roboteq_msgs::Command& command) {
   // First convert the user's command from rad/s to RPM.
-  int commanded_rpm = int(TO_RPM(command.commanded_velocity)) * 32 ;
+  float commanded_rpm = TO_RPM(command.commanded_velocity);
 
   // Now get the -1000 .. 1000 command as a proportion of the maximum RPM.
   int roboteq_command = int((commanded_rpm / max_rpm_) * 1000.0);
-  ROS_INFO_STREAM("Sending command value of " << commanded_rpm << " to motor driver.");
+  ROS_INFO_STREAM("Sending command value of " << roboteq_command << " to motor driver.");
 
   // Write the command.
   controller_->command << "G" << channel_num_ << roboteq_command << controller_->send;

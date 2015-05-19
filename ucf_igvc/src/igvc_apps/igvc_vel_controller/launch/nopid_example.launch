@@ -4,7 +4,7 @@
 	<arg name="channels" default="[right_motor, left_motor]" />
 	<arg name="wheel_radius" default="0.15875" />
 	<arg name="base_radius" default="0.35560" />
-	<arg name="cmd_vel_topic" default="/cmd_vel" />
+	<arg name="cmd_vel_topic" default="/turtlebot_teleop/cmd_vel" />
 
  	<node pkg="roboteq_driver" type="driver_node" name="roboteq_driver" output="screen">
 		<rosparam param="port" subst_value="True">$(arg port)</rosparam>
