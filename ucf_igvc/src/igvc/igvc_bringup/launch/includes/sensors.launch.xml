@@ -1,0 +1,26 @@
+<!-- Launch all sensors used on the vehicle -->
+<launch>
+    <!-- Cameras -->
+    <include file="$(find igvc_bringup)/launch/includes/sensors/cameras.launch.xml" />
+
+    <!-- Laser -->
+    <include file="$(find core_hokuyo)/launch/hokuyo.launch" >
+        <arg name="scan_topic" value="base_scan" />
+        <arg name="port" value="/dev/ttyACM0" />
+        <arg name="frame_id" value="base_laser" />
+    </include>
+
+    <!-- IMU -->
+    <include file="$(find core_sparton)/launch/AHRS-8.launch" >
+        <arg name="port" value="/dev/sparton/ahrs8"/>
+        <arg name="baud" value="115200" />
+    </include>
+
+    <!-- GPS -->
+    <include file="$(find core_gps)/launch/nmea_navsat_driver.launch" >
+        <arg name="port" value="/dev/gps" />
+        <arg name="baud" value="9600" />
+        <arg name="frame_id" value="gps" />
+    </include>
+
+</launch>

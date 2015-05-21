@@ -1,0 +1,16 @@
+<!-- Launch everything but control system for IGVC platform -->
+<launch>
+
+    <!-- Load Static transforms onto the parameter server -->
+    <param name="robot_description" command="$(find xacro)/xacro.py '$(find igvc_description)/robots/igvc.urdf.xacro'"/>
+
+    <!-- Setup robot_state_publisher to publish all static transforms -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" />
+
+    <!-- Bring up all used sensors -->
+    <include file="$(find igvc_bringup)/launch/includes/sensors.launch.xml" />
+
+    <!-- Bring up all applications -->
+    <include file="$(find igvc_bringup)/launch/includes/applications.launch.xml" />
+
+</launch>

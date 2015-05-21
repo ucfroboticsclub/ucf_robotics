@@ -4,13 +4,16 @@
     <!-- Arguments necessary to distinguish and locate camera -->
     <arg name="cam_name" default="camera" />
     <arg name="cam_port" default="/dev/video0" />
+    <arg name="image_width" default="640" />
+    <arg name="image_height" default="480" />
+    <arg name="pixel_format" default="yuyv" />
 
     <!-- Launch a usb_cam_node with the given name on given port -->
     <node pkg="usb_cam" type="usb_cam_node" name="$(arg cam_name)" >
         <param name="video_device" value="$(arg cam_port)"/>
-        <param name="image_width" value="640" />
-        <param name="image_height" value="480" />
-        <param name="pixel_format" value="yuyv" />
+        <param name="image_width" value="$(arg image_width)" />
+        <param name="image_height" value="$(arg image_height)" />
+        <param name="pixel_format" value="$(arg pixel_format)" />
     </node>
     
 </launch>
