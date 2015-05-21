@@ -59,6 +59,9 @@
         <!-- More reading needs to be done here, false for now.  Note Twist has no absolute values. -->
         <param name="imu0_differential" value="false"/>
 
+        <!-- Whether to remove gravitational acceleration from the IMU -->
+        <param name="imu0_remove_gravitational_acceleration" value="true"/>
+
         <!-- Remap output -->
         <remap from="odometry/filtered" to="odometry/local"/>
     </node>

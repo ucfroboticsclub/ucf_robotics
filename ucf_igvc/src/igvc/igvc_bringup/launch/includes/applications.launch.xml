@@ -1,0 +1,12 @@
+<!-- Launch file containing launching of IGVC applications.
+
+     igvc_vel_controller: Roboteq controller capability.  Translates /cmd_vel to motor RPMs
+     igvc_encoders: Roboteq feedback capability.  Gets encoder data and translates to odometry.
+     igvc_navigation: ROS Navigation Stack implementation and slam_gmapping
+     igvc_localization: ROS robot_localization implementation. -->
+<launch>
+    <include file="$(find igvc_vel_controller)/launch/nopid_example.launch"/>
+    <include file="$(find igvc_encoders)/launch/igvc_encoders.launch"/>
+    <include file="$(find igvc_navigation)/launch/move_base.launch"/>
+    <include file="$(find igvc_localization)/launch/igvc_localization.launch"/>
+</launch>
