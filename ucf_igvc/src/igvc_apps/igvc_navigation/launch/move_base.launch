@@ -6,6 +6,8 @@
 	    <param name="base_frame" value="base_footprint"/>
 	    <param name="odom_frame" value="odom"/>
 	    <param name="global_frame" value="map"/>
+
+	    <remap from="scan" to="base_scan"/>
   	</node>
 
   	<!-- Start up move_base -->

@@ -33,7 +33,7 @@
         <!-- Specify inputs to use and their topics.  Supported values are odomN, twistN, imuN, poseN.  
              Note that twist and pose are the covariancestamped varieties. -->
         <param name="imu0" value="imu/data"/>
-        <param name="odom0" value="placeholder/odom"/>
+        <param name="twist0" value="igvc_encoder/twist"/>
 
         <!-- Configuration of the inputs specified above.  Matrix defining what to use in estimates. -->
         <!-- Values are laid out as shown below:
@@ -44,21 +44,23 @@
               x_accel, y_accel, z_accel] -->
 
         <rosparam param="imu0_config">[false, false, false,
-                                       true, true, true,
+                                       false, false, true,
                                        false, false, false,
-                                       true, true, true,
-                                       true, true, true]</rosparam>
+                                       false, false, true,
+                                       false, false, false]</rosparam>
 
-        <rosparam param="odom0_config">[false, false, false,
-                                        false, false, false,
-                                        true, false, false,
-                                        false, false, false,
-                                        false, false, false]</rosparam>
+        <rosparam param="twist0_config">[false, false, false,
+                                         false, false, false,
+                                         true, false, false,
+                                         false, false, true,
+                                         false, false, false]</rosparam>
 
         <!-- Whether to use the sensors capable of absolute measurements in differential mode. -->
         <!-- More reading needs to be done here, false for now.  Note Twist has no absolute values. -->
         <param name="imu0_differential" value="false"/>
-        <param name="odom0_differential" value="false"/>
+
+        <!-- Whether to remove gravitational acceleration from the IMU -->
+        <param name="imu0_remove_gravitational_acceleration" value="true"/>
 
         <!-- Remap output -->
         <remap from="odometry/filtered" to="odometry/local"/>

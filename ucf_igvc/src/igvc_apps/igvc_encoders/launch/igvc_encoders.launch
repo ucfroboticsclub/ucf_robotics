@@ -1,0 +1,10 @@
+<!-- Launch igvc_encoder node -->
+<launch>
+    <node pkg="igvc_encoders" type="igvc_encoders_node" name="igvc_encoder" >
+        <param name="left_motor_feedback_topic" value="/left_motor/feedback"/>
+        <param name="right_motor_feedback_topic" value="/right_motor/feedback"/>
+        <param name="wheel_radius" value="0.15875"/>
+        <param name="base_radius" value="0.35560"/>
+        <param name="gear_ratio" value="32"/>
+    </node>
+</launch>

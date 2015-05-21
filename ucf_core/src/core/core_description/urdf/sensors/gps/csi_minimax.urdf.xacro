@@ -8,7 +8,7 @@
 
     <xacro:macro name="minimax_gps" params="parent xPos yPos zPos roll pitch yaw" >
 
-        <link name="minimax_gps" >
+        <link name="gps" >
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0" />
                 <geometry>
@@ -30,14 +30,14 @@
             </inertial>
         </link>
 
-        <gazebo reference="minimax_gps" />
+        <gazebo reference="gps" />
 
-        <joint name="minimax_gps_joint" type="fixed" >
+        <joint name="gps_joint" type="fixed" >
             <parent link="${parent}" />
-            <child link="minimax_gps" />
+            <child link="gps" />
             <origin xyz="${xPos} ${yPos} ${zPos}" rpy="${roll} ${pitch} ${yaw}" />
         </joint>
 
-        <gazebo reference="minimax_gps_joint" />
+        <gazebo reference="gps_joint" />
     </xacro:macro>
 </robot>
