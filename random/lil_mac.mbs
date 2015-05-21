@@ -103,16 +103,16 @@ top:
 	end if
 		
 	if ForceRC = 1 then
-		setcommand(_MXMD, 1)
+		setconfig(_MXMD, 1)
 		Throttle = getvalue(_CIP, 1)
-		Steering = getvalue(_CIP, 2)
+		Steering = getvalue(_CIP, 2) / 4
 		
 		setcommand(_G, 1, Throttle)
 		setcommand(_G, 2, Steering)
 		
 		wait(10)
 	else
-		setcommand(_MXMD, 0)
+		setconfig(_MXMD, 0)
 		for ch = 1 andwhile ch <= MAX_CHANNELS evaluate ch++
 			if getvalue(_BOOL, ch) = 1 then
 				GoSub PrintFeedback  ' 25 Hz
