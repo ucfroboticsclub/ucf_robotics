@@ -68,10 +68,10 @@
 	<c920_camera identifier="right" parent="base_link" xPos="-0.6" yPos="-0.05" zPos="1.2" roll="0" pitch="0.35" yaw="-1.5708"/>
 
 	<!-- Add a laser -->
-	<hokuyo_utm30lx parent="base_link" xPos="0.62" yPos="0" zPos="-0.26" roll="3.14159" pitch="0" yaw="0"/>
+	<hokuyo_utm30lx parent="base_link" xPos="0.62" yPos="0" zPos="0" roll="3.14159" pitch="0" yaw="0"/>
 
 	<!-- Add AHRS-8 -->
-	<sparton_ahrs8 parent="base_link" xPos="0.0" yPos="0" zPos="0.2" roll="0" pitch="-1.5708" yaw="3.14159"/>
+	<sparton_ahrs8 parent="base_link" xPos="0.0" yPos="0" zPos="0" roll="0" pitch="0" yaw="0"/>
 
 	<!-- Add GPS -->
 	<minimax_gps parent="base_link" xPos="-0.2" yPos="0" zPos="0.2" roll="0" pitch="0" yaw="0" />

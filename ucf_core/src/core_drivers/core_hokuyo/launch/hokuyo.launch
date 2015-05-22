@@ -1,6 +1,7 @@
 <launch>
    <arg name="scan_topic" default="scan"/>
    <arg name="port" default="/dev/ttyACM0" />
+   <arg name="frame_id" default="laser" />
    
    <node name="hokuyo" pkg="hokuyo_node" type="hokuyo_node" respawn="false" output="screen">
 	   <param name="calibrate_time" type="bool" value="true"/> 
@@ -9,6 +10,7 @@
 	   <param name="min_ang" value="-2.356194437"/>   
 	   <param name="max_ang" value="2.35619443"/>    
 	   <param name="cluster" value="1"/>
+       <param name="frame_id" value="$(arg frame_id)"/>
 
 	   <remap from="scan" to="$(arg scan_topic)" />
    </node>

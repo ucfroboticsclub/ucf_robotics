@@ -1,4 +1,4 @@
-<!-- Launch robot state information for the IGVC platform -->
+<!-- Launch everything but control system for IGVC platform -->
 <launch>
 
     <!-- Load Static transforms onto the parameter server -->
@@ -9,5 +9,8 @@
 
     <!-- Bring up all used sensors -->
     <include file="$(find igvc_bringup)/launch/includes/sensors.launch.xml" />
+
+    <!-- Bring up all applications -->
+    <include file="$(find igvc_bringup)/launch/includes/applications.launch.xml" />
 
 </launch>

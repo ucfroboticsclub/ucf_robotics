@@ -7,6 +7,7 @@
     <include file="$(find core_hokuyo)/launch/hokuyo.launch" >
         <arg name="scan_topic" value="base_scan" />
         <arg name="port" value="/dev/ttyACM0" />
+        <arg name="frame_id" value="base_laser" />
     </include>
 
     <!-- IMU -->
