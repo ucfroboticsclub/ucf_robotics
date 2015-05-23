@@ -19,7 +19,7 @@
     <!-- GPS -->
     <include file="$(find core_gps)/launch/nmea_navsat_driver.launch" >
         <arg name="port" value="/dev/gps" />
-        <arg name="baud" value="9600" />
+        <arg name="baud" value="19200" />
         <arg name="frame_id" value="gps" />
     </include>
 

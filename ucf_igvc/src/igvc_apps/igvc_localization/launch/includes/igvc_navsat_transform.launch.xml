@@ -33,8 +33,8 @@
 
         <!-- Remap input topics. -->
         <!-- <remap from="imu/data" to="imu/data" /> -->
-        <!-- <remap from="odometry/filtered" to="odometry/filtered" /> -->
-        <!-- <remap from="gps/fix" to="gps/fix" /> -->
+        <remap from="odometry/filtered" to="odometry/local" />
+        <remap from="gps/fix" to="/fix" />
 
         <!-- Remap output topics. -->
         <!-- <remap from="odometry/gps" to="odometry/gps" /> -->
