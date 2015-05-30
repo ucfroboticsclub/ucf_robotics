@@ -7,24 +7,24 @@
 	<include file="$(find core_cameras)/launch/usb_cam.launch" >
 		<arg name="cam_name" value="camera_front" />
 		<arg name="cam_port" value="/dev/cameras/front_cam" />
-        <arg name="image_width" value="320" />
-        <arg name="image_height" value="240" />
+        <arg name="image_width" value="640" />
+        <arg name="image_height" value="480" />
 	</include>
 
     <!-- Launch right camera -->
-    <include file="$(find core_cameras)/launch/usb_cam.launch" >
+    <!-- <include file="$(find core_cameras)/launch/usb_cam.launch" >
         <arg name="cam_name" value="camera_right" />
         <arg name="cam_port" value="/dev/cameras/right_cam" />
         <arg name="image_width" value="320" />
         <arg name="image_height" value="240" />
-    </include>
+    </include> -->
 
     <!-- Launch left camera -->
-    <include file="$(find core_cameras)/launch/usb_cam.launch" >
+    <!-- <include file="$(find core_cameras)/launch/usb_cam.launch" >
         <arg name="cam_name" value="camera_left" />
         <arg name="cam_port" value="/dev/cameras/left_cam" />
         <arg name="image_width" value="320" />
         <arg name="image_height" value="240" />
-    </include>
+    </include> -->
 
 </launch>

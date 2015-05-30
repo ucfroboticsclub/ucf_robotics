@@ -7,7 +7,7 @@
 	    <param name="odom_frame" value="odom"/>
 	    <param name="global_frame" value="map"/>
 
-	    <remap from="scan" to="base_scan"/>
+	    <remap from="scan" to="multi_scan"/>
   	</node>
 
   	<!-- Start up move_base -->
