@@ -26,3 +26,6 @@ float32 ic_temperature
 # Internal supply and reference voltage (V)
 float32 internal_voltage
 float32 adc_voltage
+
+#Autonomous state
+bool autonomous_state

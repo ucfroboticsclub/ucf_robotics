@@ -221,7 +221,7 @@ namespace roboteq {
                 return;
             }
 
-            if (fields.size() != 7)
+            if (fields.size() != 8)
             {
                 ROS_WARN("Wrong number of status fields. Dropping message.");
                 return;
@@ -230,6 +230,8 @@ namespace roboteq {
             msg.fault = boost::lexical_cast<int>(fields[2]);
             msg.status = boost::lexical_cast<int>(fields[3]);
             msg.ic_temperature = boost::lexical_cast<int>(fields[6]);
+            msg.autonomous_state = boost::lexical_cast<bool>(fields[7]);
+
         } catch (std::bad_cast &e)
         {
             ROS_WARN("Failure parsing status data. Dropping message.");
