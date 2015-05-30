@@ -1,0 +1,19 @@
+<launch>
+    <include file="$(find vehicle_video)/launch/lane_detection.launch">
+        <arg name="identifier" value="front_lane_detector" />
+        <arg name="fake_scan_frame_id" value="front_fake_laser" />
+        <arg name="fake_scan_topic" value="front_fake_scan" />
+    </include>
+
+    <include file="$(find vehicle_video)/launch/lane_detection.launch">
+        <arg name="identifier" value="left_lane_detector" />
+        <arg name="fake_scan_frame_id" value="left_fake_laser" />
+        <arg name="fake_scan_topic" value="left_fake_scan" />
+    </include>
+
+    <include file="$(find vehicle_video)/launch/lane_detection.launch">
+        <arg name="identifier" value="right_lane_detector" />
+        <arg name="fake_scan_frame_id" value="right_fake_laser" />
+        <arg name="fake_scan_topic" value="right_fake_scan" />
+    </include>
+</launch>
