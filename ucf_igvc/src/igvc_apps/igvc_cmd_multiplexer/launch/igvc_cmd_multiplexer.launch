@@ -1,0 +1,8 @@
+<launch>
+	<arg name="cmd_vel_topic" default="/cmd_vel" />
+	<arg name="auto_cmd_topic" default="/auto_cmd_topic" />
+	<arg name="teleop_cmd_topic" default="/teleop_cmd_topic" />
+	<arg name="status_topic" default="/status_topic" />
+	<arg name="sleep_rate" default="15" />
+
+</launch>
