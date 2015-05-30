@@ -1,0 +1,16 @@
+<launch>
+    <arg name="identifier" default="lane_detector" />
+    <arg name="homography_file" default="/home/kenneth/temp/front_homography.xml" />
+    <arg name="configuration_file" default="/home/kenneth/temp/front_configuration.xml" />
+    <arg name="source_image_topic" default="/camera/image_raw" />
+    <arg name="fake_scan_frame_id" default="fake_laser" />
+    <arg name="fake_scan_topic" default="fake_scan" />
+
+    <node pkg="lane_detection" type="lane_detector" name="$(arg identifier)" output="screen">
+        <param name="homography_file" value="$(arg homography_file)"/>
+        <param name="configuration_file" value="$(arg configuration_file)"/>
+        <param name="source_image_topic" value="$(arg source_image_topic)"/>
+        <param name="fake_scan_frame_id" value="$(arg fake_scan_frame_id)"/>
+        <param name="fake_scan_topic" value="$(arg fake_scan_topic)"/>
+    </node>
+</launch>
