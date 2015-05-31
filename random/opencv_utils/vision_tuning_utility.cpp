@@ -122,6 +122,8 @@ void filterImage()
     int block_width = filtered.size().width / grid_cols;
     int block_height = filtered.size().height / grid_rows;
 
+    cv::Mat fitline(filtered.rows, filtered.cols, CV_8U);
+
     for (int i = 0; i < grid_cols; i++)
     {
         for (int j = 0; j < grid_rows; j++)
@@ -131,6 +133,7 @@ void filterImage()
 
             cv::Rect grid(block_width * i, block_height * j, block_width, block_height);
             cv::Mat roi = filtered(grid);
+            cv::Mat fitline_roi = fitline(grid);
             cv::findContours(roi, contours, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
 
             std::vector<cv::Point> points;
@@ -162,9 +165,10 @@ void filterImage()
             cv::Point2f up_right(lines[2] + lines[0] * 1000,
                                  lines[3] + lines[1] * 1000);
 
-            cv::line(roi, low_left, up_right, cv::Scalar(255, 0, 0), 5);
+            cv::line(fitline_roi, low_left, up_right, cv::Scalar(255, 0, 0), 5);
         }
     }
+    filtered = fitline;
 }
 
 // Warp the filtered and fitlined image to bird's eye view.

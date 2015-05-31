@@ -133,6 +133,8 @@ public:
         int block_width = filtered_.size().width / grid_cols_;
         int block_height = filtered_.size().height / grid_rows_;
 
+        cv::Mat fitline(filtered_.rows, filtered_.cols, CV_8U);
+
         for (int i = 0; i < grid_cols_; i++)
         {
             for (int j = 0; j < grid_rows_; j++)
@@ -142,6 +144,7 @@ public:
 
                 cv::Rect grid(block_width * i, block_height * j, block_width, block_height);
                 cv::Mat roi = filtered_(grid);
+                cv::Mat fitline_roi = fitline(grid);
                 cv::findContours(roi, contours, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
 
                 std::vector<cv::Point> points;
@@ -173,9 +176,10 @@ public:
                 cv::Point2f up_right(lines[2] + lines[0] * 1000,
                                      lines[3] + lines[1] * 1000);
 
-                cv::line(roi, low_left, up_right, cv::Scalar(255, 0, 0), 5);
+                cv::line(fitline_roi, low_left, up_right, cv::Scalar(255, 0, 0), 5);
             }
         }
+        filtered_ = fitline;
     }
 
     void warpFiltered()
