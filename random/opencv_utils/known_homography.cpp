@@ -16,7 +16,7 @@ int main(int argc, char** argv)
     original = cv::imread("/home/kenneth/Pictures/checkerboard.png");
 
     cv::FileStorage fs("/home/kenneth/temp/front_homography.xml", cv::FileStorage::READ);
-    fs["front-homography"] >> homography_matrix;
+    fs["homography-matrix"] >> homography_matrix;
     fs.release();
 
     warped = cv::Mat::zeros(original.size(), CV_8UC3);
