@@ -37,6 +37,8 @@ int main(int argc, char** argv)
 
     if (found_corners)
     {
+        std::cout << "Found corners" << std::endl;
+
         cv::cornerSubPix(gray_original, corners, cv::Size(11, 11), cv::Size(-1, -1),
             cv::TermCriteria(CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 30, 0.1));
 
@@ -81,6 +83,7 @@ int main(int argc, char** argv)
 
         cv::FileStorage fs("/home/kenneth/temp/front_homography.xml", cv::FileStorage::WRITE);
         fs << "homography-matrix" << h;
+        fs.release();
 
         warped = cv::Mat::zeros(original_copy.size(), CV_8UC3);
         cv::Size dstSize(original_copy.cols, original_copy.rows);
@@ -94,7 +97,7 @@ int main(int argc, char** argv)
     while(true)
     {
         int key = cv::waitKey();
-        if (key == 27)
+        if (key % 256 == 27)
             break;
     }
 
