@@ -593,5 +593,10 @@ int main(int argc, char** argv)
 
     LaneDetector detector(nh);
 
-    ros::spin();
+    ros::Rate sleep_rate(15);
+    while (ros::ok())
+    {
+        ros::spinOnce();
+        sleep_rate.sleep();
+    }
 }
