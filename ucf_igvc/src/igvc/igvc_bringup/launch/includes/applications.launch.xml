@@ -15,10 +15,10 @@
         <arg name="identifier" value="front_lane_detector"/>
         <arg name="homography_file" value="$(find lane_detection)/config/front_homography.xml"/>
         <arg name="configuration_file" value="$(find lane_detection)/config/front_configuration.xml"/>
-        <arg name="source_image_topic" value="/front_camera/image_raw"/>
+        <arg name="source_image_topic" value="/camera_front/image_raw"/>
         <arg name="fake_scan_frame_id" value="front_fake_laser"/>
         <arg name="fake_scan_topic" value="front_fake_scan"/>
     </include>
 
-    <include file="$(find ira_laser_tools)/launch/laserscan_multi_merger.launch"/>
+    <!-- <include file="$(find ira_laser_tools)/launch/laserscan_multi_merger.launch"/> -->
 </launch>

@@ -1,11 +1,11 @@
 <!-- Launch a lane detection node. -->
 <launch>
-    <arg name="identifier" default="" />
-    <arg name="homography_file" default="" />
-    <arg name="configuration_file" default="" />
-    <arg name="source_image_topic" default="" />
-    <arg name="fake_scan_frame_id" default="" />
-    <arg name="fake_scan_topic" default="" />
+    <arg name="identifier" default="front_lane_detector" />
+    <arg name="homography_file" default="$(find lane_detection)/config/front_homography.xml" />
+    <arg name="configuration_file" default="$(find lane_detection)/config/front_configuration.xml" />
+    <arg name="source_image_topic" default="/front_camera/image_raw" />
+    <arg name="fake_scan_frame_id" default="front_fake_laser" />
+    <arg name="fake_scan_topic" default="front_fake_scan" />
 
     <node pkg="lane_detection" type="lane_detector" name="$(arg identifier)" output="screen">
         <param name="homography_file" value="$(arg homography_file)"/>

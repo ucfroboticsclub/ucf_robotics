@@ -4,5 +4,7 @@ green
 pyramid
 get_homography_matrix
 vision_tuning_utility
+known_homography
+dumb_config
 CMakeFiles/
 cmake_install.cmake

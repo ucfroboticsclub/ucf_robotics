@@ -255,6 +255,8 @@ public:
         scan.angle_increment = .00576f;
         scan.range_min = .01;
         scan.range_max = 60;
+        scan.time_increment = 0.00001;
+        scan.scan_time = 0.05;
 
         float angle_range = scan.angle_max - scan.angle_min;
 

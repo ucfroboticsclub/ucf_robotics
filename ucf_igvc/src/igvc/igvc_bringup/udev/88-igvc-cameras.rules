@@ -1,3 +1,3 @@
-SUBSYSTEM=="video4linux", SUBSYSTEMS=="usb", ATTRS{idVendor}=="046d", ATTRS{serial}=="6A3BC93E", MODE="0666", SYMLINK+="cameras/front_cam"
+SUBSYSTEM=="video4linux", SUBSYSTEMS=="usb", ATTRS{idVendor}=="046d", ATTRS{serial}=="8EC3937E", MODE="0666", SYMLINK+="cameras/front_cam"
 SUBSYSTEM=="video4linux", SUBSYSTEMS=="usb", ATTRS{idVendor}=="046d", ATTRS{serial}=="8F7DE93E", MODE="0666", SYMLINK+="cameras/right_cam"
 SUBSYSTEM=="video4linux", SUBSYSTEMS=="usb", ATTRS{idVendor}=="046d", ATTRS{serial}=="521DE93E", MODE="0666", SYMLINK+="cameras/left_cam"

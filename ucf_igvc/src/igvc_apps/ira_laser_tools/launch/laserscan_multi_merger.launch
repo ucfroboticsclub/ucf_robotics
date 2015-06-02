@@ -8,6 +8,6 @@ DESCRITPION
 		<param name="destination_frame" value="/base_link"/>
 		<param name="cloud_destination_topic" value="/merged_cloud"/>
 		<param name="scan_destination_topic" value="/scan_multi"/>
-                <param name="laserscan_topics" value="/base_scan front_lane_detector/front_fake_scan" /> <!-- LIST OF THE LASER SCAN TOPICS TO SUBSCRIBE -->
+        <param name="laserscan_topics" value="/base_scan /front_lane_detector/front_fake_scan" /> <!-- LIST OF THE LASER SCAN TOPICS TO SUBSCRIBE -->
 	</node>
 </launch>

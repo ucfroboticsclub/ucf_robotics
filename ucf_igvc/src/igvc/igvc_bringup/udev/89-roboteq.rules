@@ -1,0 +1,1 @@
+SUBSYSTEMS=="usb", ATTRS{serial}=="FTTPW6F7", MODE="0666", SYMLINK+="roboteq"
