@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <opencv_storage>
 <white-thresh-low>
-  0. 0. 80. 0.</white-thresh-low>
+  0. 0. 220. 0.</white-thresh-low>
 <white-thresh-high>
-  255. 218. 255. 0.</white-thresh-high>
+  255. 32. 255. 0.</white-thresh-high>
 <orange-thresh-low>
   0. 0. 0. 0.</orange-thresh-low>
 <orange-thresh-high>

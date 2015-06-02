@@ -20,5 +20,25 @@
         <arg name="fake_scan_topic" value="front_fake_scan"/>
     </include>
 
+    <!-- Left camera lane detection node. -->
+    <include file="$(find lane_detection)/launch/lane_detection.launch">
+        <arg name="identifier" value="left_lane_detector"/>
+        <arg name="homography_file" value="$(find lane_detection)/config/left_homography.xml"/>
+        <arg name="configuration_file" value="$(find lane_detection)/config/front_configuration.xml"/>
+        <arg name="source_image_topic" value="/camera_left/image_raw"/>
+        <arg name="fake_scan_frame_id" value="left_fake_laser"/>
+        <arg name="fake_scan_topic" value="left_fake_scan"/>
+    </include>
+
+    <!-- Right camera lane detection node. -->
+    <include file="$(find lane_detection)/launch/lane_detection.launch">
+        <arg name="identifier" value="right_lane_detector"/>
+        <arg name="homography_file" value="$(find lane_detection)/config/right_homography.xml"/>
+        <arg name="configuration_file" value="$(find lane_detection)/config/front_configuration.xml"/>
+        <arg name="source_image_topic" value="/camera_right/image_raw"/>
+        <arg name="fake_scan_frame_id" value="right_fake_laser"/>
+        <arg name="fake_scan_topic" value="right_fake_scan"/>
+    </include>
+
     <!-- <include file="$(find ira_laser_tools)/launch/laserscan_multi_merger.launch"/> -->
 </launch>

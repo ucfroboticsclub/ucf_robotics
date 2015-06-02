@@ -21,8 +21,10 @@ int main(int argc, char** argv)
     cv::Mat original_copy;
     cv::Mat warped;
 
+    cv::VideoCapture cap(2);
+    cap >> original;
     // Get original BGR encoded image.
-    original = cv::imread("/home/kenneth/Pictures/checkerboard.png");
+    //original = cv::imread("/home/auvsi/Pictures/checkerboard.png");
     original_copy = original.clone();
     // Convert the BGR image to grayscale before finding corners.
     cv::cvtColor(original, gray_original, CV_BGR2GRAY);
@@ -81,7 +83,7 @@ int main(int argc, char** argv)
         //float Z = 1.0f;
         //h.at<double>(2, 2) = Z;
 
-        cv::FileStorage fs("/home/kenneth/temp/front_homography.xml", cv::FileStorage::WRITE);
+        cv::FileStorage fs("/home/auvsi/temp/front_homography.xml", cv::FileStorage::WRITE);
         fs << "homography-matrix" << h;
         fs.release();
 

@@ -1,8 +1,15 @@
 <launch>
 	<arg name="cmd_vel_topic" default="/cmd_vel" />
-	<arg name="auto_cmd_topic" default="/auto_cmd_topic" />
-	<arg name="teleop_cmd_topic" default="/teleop_cmd_topic" />
-	<arg name="status_topic" default="/status_topic" />
+	<arg name="auto_cmd_topic" default="/move_base/cmd_vel" />
+	<arg name="teleop_cmd_topic" default="/turtlebot_teleop/cmd_vel" />
+	<arg name="status_topic" default="/roboteq_driver/status" />
 	<arg name="sleep_rate" default="15" />
 
+	<node pkg="igvc_cmd_multiplexer" type="igvc_cmd_multiplexer_node"  name="igvc_cmd_multiplexer" >
+		<param name="cmd_vel_topic" value="$(arg cmd_vel_topic)" />
+		<param name="auto_cmd_topic" value="$(arg auto_cmd_topic)" />
+		<param name="teleop_cmd_topic" value="$(arg teleop_cmd_topic)" />
+		<param name="status_topic" value="$(arg status_topic)" />
+		<param name="sleep_rate" value="$(arg sleep_rate)" />
+	</node>
 </launch>

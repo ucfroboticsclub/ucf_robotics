@@ -69,6 +69,34 @@
 		<child link="front_fake_laser"/>
 	</joint>
 
+	<link name="left_fake_laser">
+		<visual>
+			<geometry>
+				<box size="0.001 0.001 0.001" />
+			</geometry>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+		</visual>
+	</link>
+	<joint name="left_fake_laser_joint" type="fixed">
+		<origin xyz="0.33 0.737 0" rpy="0 0 0.7854"/>
+		<parent link="base_link"/>
+		<child link="left_fake_laser"/>
+	</joint>
+
+	<link name="right_fake_laser">
+		<visual>
+			<geometry>
+				<box size="0.001 0.001 0.001" />
+			</geometry>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+		</visual>
+	</link>
+	<joint name="right_fake_laser_joint" type="fixed">
+		<origin xyz="0.33 -0.737 0" rpy="0 0 -0.7854"/>
+		<parent link="base_link"/>
+		<child link="right_fake_laser"/>
+	</joint>
+
 	<!-- Add the wheels -->
 	<igvc_wheel parent="base_link" lr="right" reflectY="-1"/>
 	<igvc_wheel parent="base_link" lr="left" reflectY="1"/>
