@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<opencv_storage>
+<white-thresh-low>
+  0. 0. 130. 0.</white-thresh-low>
+<white-thresh-high>
+  255. 38. 255. 0.</white-thresh-high>
+<orange-thresh-low>
+  0. 0. 0. 0.</orange-thresh-low>
+<orange-thresh-high>
+  0. 0. 0. 0.</orange-thresh-high>
+<grid-cols>6</grid-cols>
+<grid-rows>6</grid-rows>
+<contour-area-threshold>74</contour-area-threshold>
+<morph-elem>0</morph-elem>
+<morph-size>14</morph-size>
+<morph-operator>0</morph-operator>
+</opencv_storage>

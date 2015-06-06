@@ -17,6 +17,7 @@
 		<rosparam file="$(find igvc_navigation)/param/local_costmap_params.yaml" command="load"/>
 		<rosparam file="$(find igvc_navigation)/param/global_costmap_params.yaml" command="load"/>
 		<rosparam file="$(find igvc_navigation)/param/base_local_planner_params.yaml" command="load"/>
+		<param name="planner_frequency" value="1.0" />
 		<remap from="/cmd_vel" to="/move_base/cmd_vel" />
 	</node>
 

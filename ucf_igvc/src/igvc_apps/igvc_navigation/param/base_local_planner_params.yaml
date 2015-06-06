@@ -1,6 +1,6 @@
 TrajectoryPlannerROS:
     # Robot Configuration
-    max_vel_x: 0.3
+    max_vel_x: 1.0
     min_vel_x: 0.1
     max_vel_y: 0.0 # Diff drive
     min_vel_y: 0.0 # Diff drive
@@ -17,7 +17,7 @@ TrajectoryPlannerROS:
     latch_xy_goal_tolerance: true # ONLY turn in place once we reach the xy goal
 
     # Path weight parameters
-    pdist_scale: 1.2 # Weight to stay close to given path, default 0.6
+    pdist_scale: 1.0 # Weight to stay close to given path, default 0.6
     gdist_scale: 0.8 # Weight for how much to attempt to reach goal, default 0.8
     occdist_scale: 0.05 # Weight for obstacle avoidance, default 0.01
 

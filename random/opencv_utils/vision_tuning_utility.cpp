@@ -99,11 +99,11 @@ void filterImage()
 
     // Blur the HSV image.
     cv::Mat src_blur;
-    cv::GaussianBlur(src_HSV, src_blur, cv::Size(5, 5), 0, 0);
+    cv::GaussianBlur(src_HSV, src_blur, cv::Size(7, 7), 0, 0);
 
     // Find white in a different image.
     cv::Mat threshed_white;
-    cv::inRange(src_HSV, white_thresh_low, white_thresh_high,
+    cv::inRange(src_blur, white_thresh_low, white_thresh_high,
                 threshed_white);
     cv::imshow("White Threshold", threshed_white);
 
@@ -122,7 +122,9 @@ void filterImage()
     int block_width = filtered.size().width / grid_cols;
     int block_height = filtered.size().height / grid_rows;
 
-    cv::Mat fitline(filtered.rows, filtered.cols, CV_8U);
+    
+    cv::Mat fitline;
+    fitline = cv::Mat::zeros(filtered.size(), CV_8U);
 
     for (int i = 0; i < grid_cols; i++)
     {
@@ -154,21 +156,19 @@ void filterImage()
             if (points.size() > 0)
             {
                 cv::fitLine(points, lines, CV_DIST_HUBER, 0, 0.01, 0.01);
-            }
-            else
-            {
-                continue;
-            }
 
-            cv::Point2f low_left(lines[2] - lines[0] * 1000,
-                                 lines[3] - lines[1] * 1000);
-            cv::Point2f up_right(lines[2] + lines[0] * 1000,
-                                 lines[3] + lines[1] * 1000);
 
-            cv::line(fitline_roi, low_left, up_right, cv::Scalar(255, 0, 0), 5);
+                cv::Point2f low_left(lines[2] - lines[0] * 1000,
+                                     lines[3] - lines[1] * 1000);
+                cv::Point2f up_right(lines[2] + lines[0] * 1000,
+                                     lines[3] + lines[1] * 1000);
+
+                cv::line(fitline_roi, low_left, up_right, cv::Scalar(255, 0, 0), 5);
+            }
         }
     }
-    filtered = fitline;
+
+   fitline.copyTo(filtered);
 }
 
 // Warp the filtered and fitlined image to bird's eye view.

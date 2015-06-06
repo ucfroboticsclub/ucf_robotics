@@ -53,6 +53,7 @@ int main(int argc, char** argv)
         // Get the current frame and make a copy.
         cap >> original;
         original_copy = original.clone();
+        std::cout << "Image width,height:" << original.cols << "," << original.rows << std::endl;
 
         // Convert the BGR image to grayscale before finding corners.
         cv::cvtColor(original, gray_original, CV_BGR2GRAY);
@@ -68,8 +69,6 @@ int main(int argc, char** argv)
 
         if (found_corners)
         {
-            std::cout << "Found corners" << std::endl;
-
             cv::cornerSubPix(gray_original, corners, cv::Size(11, 11),
                              cv::Size(-1, -1),
                              cv::TermCriteria(
