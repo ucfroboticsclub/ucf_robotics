@@ -120,6 +120,7 @@ def main():
         # Add AdvanceWaypoint state.
         smach.StateMachine.add("AdvanceWaypoint", AdvanceWaypoint(),
                                transitions={'succeeded':'GetNextWaypoint'})
+
     outcome = sm.execute()
 
     rospy.spin()
