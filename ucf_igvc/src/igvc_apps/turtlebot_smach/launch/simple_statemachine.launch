@@ -1,0 +1,10 @@
+<!-- Launch file to launch the simple statemachine using waypoint_navigation services. -->
+<launch>
+    <arg name="service_ns" default="waypoint_manager" />
+    <node pkg="turtlebot_smach" type="simple_statemachine.py" name="statemachine" output="screen">
+        <remap from='advance_waypoint' to="$(arg service_ns)/advance_waypoint" />
+        <remap from='backtrack_waypoint' to="$(arg service_ns)/backtrack_waypoint" />
+        <remap from='next_waypoint' to="$(arg service_ns)/next_waypoint" />
+        <remap from='push_new_waypoint' to="$(arg service_ns)/push_new_waypoint" />
+    </node>
+</launch>
