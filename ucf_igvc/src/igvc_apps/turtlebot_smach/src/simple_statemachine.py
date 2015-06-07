@@ -15,13 +15,17 @@ from std_srvs.srv import Empty
 from waypoint_manager_msgs.srv import NextWaypoint
 from waypoint_manager_msgs.srv import PushWaypoint
 from geodesy import utm
+from roboteq_msgs.msg import Status
 
+global vehicle_state
 
 class Idle(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['succeeded'])
 
     def execute(self, userdata):
+    	rospy.wait_for_service('autonomous_mode')
+    	rospy.loginfo("Entering autonomous mode")
         rospy.wait_for_service('advance_waypoint')
         rospy.wait_for_service('backtrack_waypoint')
         rospy.wait_for_service('next_waypoint')
@@ -57,7 +61,6 @@ class MovingToWaypoint(smach.State):
 
         # First point specified is latitude, second is longitude
         utm_waypoint = utm.fromLatLong(userdata.waypoint_in.position.x, userdata.waypoint_in.position.y, 250)
-        rospy.loginfo(utm_waypoint)
         goal_pose.target_pose.pose.position.x = utm_waypoint.easting
         goal_pose.target_pose.pose.position.y = utm_waypoint.northing
         goal_pose.target_pose.pose.position.z = 0
@@ -94,9 +97,25 @@ class BacktrackWaypoint(smach.State):
         backtrack_waypoint_proxy()
         return 'succeeded'
 
+def serviceHandler():
+	return
+
+def flagCallback(data):
+	vehicle_state = data.autonomous_state
+	if vehicle_state:
+		try:
+			# Start a ROS service to signal we have received true for autonomous mode
+			# Really really goofy but no spinonce in rospy
+			server = rospy.Service("autonomous_mode", Empty, serviceHandler)
+			rospy.loginfo("Creating autonomous_mode service")
+		except rospy.ServiceException, e:
+			return
 
 def main():
     rospy.init_node('test_state_machine')
+
+    rospy.loginfo("Starting subscriber")
+    autonomous_sub = rospy.Subscriber("/roboteq_driver/status", Status, flagCallback)
 
     # Create the state machine
     sm = smach.StateMachine(outcomes=['finish'])

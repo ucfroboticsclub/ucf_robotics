@@ -10,13 +10,10 @@
                 Robot GPS coordinates transformed into world frame
                 Robot world frame position transformed to GPS coordinates -->
 <launch>
-    <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform">
-
-        <!-- Magnetic declination for our location. -->
-        <param name="magnetic_declination_radians" value="0" />
+    <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform" output="screen">
 
         <!-- Time to wait before calculating transform from GPS to robot world frame -->
-        <param name="delay" value="0" />
+        <param name="delay" value="10.0" />
 
         <!-- Whether to set nav_msgs/Odometry output Z value to 0 -->
         <param name="zero_altitude" value="true"/>
@@ -28,7 +25,9 @@
         <param name="broadcast_utm_transform" value="true"/>
 
         <!-- Whether to use heading from odometry message instead of IMU -->
-        <param name="use_odometry_yaw" value="true" />
+        <param name="use_odometry_yaw" value="false" />
+
+        <param name="yaw_offset" value="-1.57" />
 
 
         <!-- Remap input topics. -->
