@@ -138,154 +138,154 @@ public:
         // TODO: Understand this
 
 
-    std::vector<std::string> codes;
-    cv::Mat corners;
-    findDataMatrix(filtered_, codes, corners);
-    drawDataMatrixCodes(src_, codes, corners);
+//     std::vector<std::string> codes;
+//     cv::Mat corners;
+//     findDataMatrix(filtered_, codes, corners);
+//     drawDataMatrixCodes(src_, codes, corners);
 
-    cv::Rect roi(0,src_.cols/3,src_.cols-1,src_.rows - src_.cols/3);// set the ROI for the image
-    cv::Mat imgROI = filtered_(roi);
-
-
-    cv::Mat contours;
-    Canny(imgROI,contours,50,150);
-    cv::Mat contoursInv;
-    threshold(contours,contoursInv,128,255, cv::THRESH_BINARY_INV);
-
-    /*
-          Hough tranform for line detection with feedback
-          Increase by 25 for the next frame if we found some lines.
-          This is so we don't miss other lines that may crop up in the next frame
-          but at the same time we don't want to start the feed back loop from scratch.
-      */
-    std::vector<cv::Vec2f> lines;
-    if (houghVote < 1 or lines.size() > 2){ // we lost all lines. reset
-        houghVote = 200;
-    }
-    else{ houghVote += 25;}
-    while(lines.size() < 5 && houghVote > 0){
-        HoughLines(contours,lines,1,PI/180, houghVote);
-        houghVote -= 5;
-    }
-    cv::Mat result(imgROI.size(),CV_8U,cv::Scalar(255));
-    imgROI.copyTo(result);
-
-    // Draw the limes
-    std::vector<cv::Vec2f>::const_iterator it= lines.begin();
-    cv::Mat hough(imgROI.size(),CV_8U,cv::Scalar(0));
-    while (it!=lines.end()) {
-
-        float rho= (*it)[0];   // first element is distance rho
-        float theta= (*it)[1]; // second element is angle theta
-
-//            if ( theta > 0.09 && theta < 1.48 || theta < 3.14 && theta > 1.66 ) { // filter to remove vertical and horizontal lines
-
-        // point of intersection of the line with first row
-        cv::Point pt1(rho/cos(theta),0);
-        // point of intersection of the line with last row
-        cv::Point pt2((rho-result.rows*sin(theta))/cos(theta),result.rows);
-        // draw a white line
-        line( result, pt1, pt2, cv::Scalar(255), 8);
-        line( hough, pt1, pt2, cv::Scalar(255), 8);
-//            }
-
-        //std::cout << "line: (" << rho << "," << theta << ")\n";
-        ++it;
-    }
+//     cv::Rect roi(0,src_.cols/3,src_.cols-1,src_.rows - src_.cols/3);// set the ROI for the image
+//     cv::Mat imgROI = filtered_(roi);
 
 
+//     cv::Mat contours;
+//     Canny(imgROI,contours,50,150);
+//     cv::Mat contoursInv;
+//     threshold(contours,contoursInv,128,255, cv::THRESH_BINARY_INV);
 
-    // Create LineFinder instance
-    LineFinder ld;
+//     /*
+//           Hough tranform for line detection with feedback
+//           Increase by 25 for the next frame if we found some lines.
+//           This is so we don't miss other lines that may crop up in the next frame
+//           but at the same time we don't want to start the feed back loop from scratch.
+//       */
+//     std::vector<cv::Vec2f> lines;
+//     if (houghVote < 1 or lines.size() > 2){ // we lost all lines. reset
+//         houghVote = 200;
+//     }
+//     else{ houghVote += 25;}
+//     while(lines.size() < 5 && houghVote > 0){
+//         HoughLines(contours,lines,1,PI/180, houghVote);
+//         houghVote -= 5;
+//     }
+//     cv::Mat result(imgROI.size(),CV_8U,cv::Scalar(255));
+//     imgROI.copyTo(result);
+
+//     // Draw the limes
+//     std::vector<cv::Vec2f>::const_iterator it= lines.begin();
+//     cv::Mat hough(imgROI.size(),CV_8U,cv::Scalar(0));
+//     while (it!=lines.end()) {
+
+//         float rho= (*it)[0];   // first element is distance rho
+//         float theta= (*it)[1]; // second element is angle theta
+
+// //            if ( theta > 0.09 && theta < 1.48 || theta < 3.14 && theta > 1.66 ) { // filter to remove vertical and horizontal lines
+
+//         // point of intersection of the line with first row
+//         cv::Point pt1(rho/cos(theta),0);
+//         // point of intersection of the line with last row
+//         cv::Point pt2((rho-result.rows*sin(theta))/cos(theta),result.rows);
+//         // draw a white line
+//         line( result, pt1, pt2, cv::Scalar(255), 8);
+//         line( hough, pt1, pt2, cv::Scalar(255), 8);
+// //            }
+
+//         //std::cout << "line: (" << rho << "," << theta << ")\n";
+//         ++it;
+//     }
 
 
-    // Set probabilistic Hough parameters
-    ld.setLineLengthAndGap(100,50);
-    ld.setMinVote(5);
 
-    // Detect lines
-    std::vector<cv::Vec4i> li= ld.findLines(contours);
-    cv::Mat houghP(imgROI.size(),CV_8U,cv::Scalar(0));
-    ld.setShift(0);
-    ld.drawDetectedLines(houghP);
+//     // Create LineFinder instance
+//     LineFinder ld;
 
 
-    // bitwise AND of the two hough images
-    bitwise_and(houghP,hough,houghP);
-    cv::Mat houghPinv(imgROI.size(),CV_8U,cv::Scalar(0));
-    cv::Mat dst(imgROI.size(),CV_8U,cv::Scalar(0));
-    threshold(houghP,houghPinv,150,255,cv::THRESH_BINARY_INV); // threshold and invert to black lines
+//     // Set probabilistic Hough parameters
+//     ld.setLineLengthAndGap(100,50);
+//     ld.setMinVote(5);
+
+//     // Detect lines
+//     std::vector<cv::Vec4i> li= ld.findLines(contours);
+//     cv::Mat houghP(imgROI.size(),CV_8U,cv::Scalar(0));
+//     ld.setShift(0);
+//     ld.drawDetectedLines(houghP);
 
 
-    cv::Mat fitline;
-    fitline = cv::Mat::zeros(filtered_.size(), CV_8U);
-
-    ld.setLineLengthAndGap(10,5);
-    ld.setMinVote(1);
-    ld.setShift(fitline.cols/3);
-    ld.drawDetectedLines(fitline);
-    ld.drawDetectedLines(src_);
+//     // bitwise AND of the two hough images
+//     bitwise_and(houghP,hough,houghP);
+//     cv::Mat houghPinv(imgROI.size(),CV_8U,cv::Scalar(0));
+//     cv::Mat dst(imgROI.size(),CV_8U,cv::Scalar(0));
+//     threshold(houghP,houghPinv,150,255,cv::THRESH_BINARY_INV); // threshold and invert to black lines
 
 
-    lines.clear();
+//     cv::Mat fitline;
+//     fitline = cv::Mat::zeros(filtered_.size(), CV_8U);
 
-    fitline.copyTo(filtered_);
-
-
-        // int block_width = filtered__.size().width / grid_cols_;
-        // int block_height = filtered_.size().height / grid_rows_;
-
-        // cv::Mat fitline;
-        // fitline = cv::Mat::zeros(filtered_.size(), CV_8U);
+//     ld.setLineLengthAndGap(10,5);
+//     ld.setMinVote(1);
+//     ld.setShift(fitline.cols/3);
+//     ld.drawDetectedLines(fitline);
+//     ld.drawDetectedLines(src_);
 
 
-        // for (int i = 0; i < grid_cols_; i++)
-        // {
-        //     for (int j = 0; j < grid_rows_; j++)
-        //     {
-        //         std::vector< std::vector< cv::Point > > contours;
-        //         cv::Vec4f lines;
+//     lines.clear();
 
-        //         cv::Rect grid(block_width * i, block_height * j, block_width, block_height);
-        //         cv::Mat roi = filtered_(grid);
-        //         cv::Mat fitline_roi = fitline(grid);
-        //         cv::findContours(roi, contours, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
+//     fitline.copyTo(filtered_);
 
-        //         std::vector<cv::Point> points;
 
-        //         std::vector< std::vector < cv::Point > >::const_iterator iter;
-        //         for (iter = contours.begin(); iter != contours.end(); iter++)
-        //         {
-        //             if (cv::contourArea((*iter)) < contour_area_threshold_)
-        //                 continue;
+        int block_width = filtered_.size().width / grid_cols_;
+        int block_height = filtered_.size().height / grid_rows_;
 
-        //             std::vector<cv::Point>::const_iterator iter2;
-        //             for (iter2 = (*iter).begin(); iter2 != (*iter).end(); iter2++)
-        //             {
-        //                 points.push_back(*iter2);
-        //             }
-        //         }
+        cv::Mat fitline;
+        fitline = cv::Mat::zeros(filtered_.size(), CV_8U);
 
-        //         if (points.size() > 0)
-        //         {
-        //             cv::fitLine(points, lines, CV_DIST_HUBER, 0, 0.01, 0.01);
-        //         }
-        //         else
-        //         {
-        //             continue;
-        //         }
 
-        //         cv::Point2f low_left(lines[2] - lines[0] * 1000,
-        //                              lines[3] - lines[1] * 1000);
-        //         cv::Point2f up_right(lines[2] + lines[0] * 1000,
-        //                              lines[3] + lines[1] * 1000);
+        for (int i = 0; i < grid_cols_; i++)
+        {
+            for (int j = 0; j < grid_rows_; j++)
+            {
+                std::vector< std::vector< cv::Point > > contours;
+                cv::Vec4f lines;
+
+                cv::Rect grid(block_width * i, block_height * j, block_width, block_height);
+                cv::Mat roi = filtered_(grid);
+                cv::Mat fitline_roi = fitline(grid);
+                cv::findContours(roi, contours, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
+
+                std::vector<cv::Point> points;
+
+                std::vector< std::vector < cv::Point > >::const_iterator iter;
+                for (iter = contours.begin(); iter != contours.end(); iter++)
+                {
+                    if (cv::contourArea((*iter)) < contour_area_threshold_)
+                        continue;
+
+                    std::vector<cv::Point>::const_iterator iter2;
+                    for (iter2 = (*iter).begin(); iter2 != (*iter).end(); iter2++)
+                    {
+                        points.push_back(*iter2);
+                    }
+                }
+
+                if (points.size() > 0)
+                {
+                    cv::fitLine(points, lines, CV_DIST_HUBER, 0, 0.01, 0.01);
+                }
+                else
+                {
+                    continue;
+                }
+
+                cv::Point2f low_left(lines[2] - lines[0] * 1000,
+                                     lines[3] - lines[1] * 1000);
+                cv::Point2f up_right(lines[2] + lines[0] * 1000,
+                                     lines[3] + lines[1] * 1000);
 
                 
-        //         cv::line(fitline_roi, low_left, up_right, cv::Scalar(255, 0, 0), 5);
-        //     }
-        // }
+                cv::line(fitline_roi, low_left, up_right, cv::Scalar(255, 0, 0), 5);
+            }
+        }
 
-        // fitline.copyTo(filtered_);
+        fitline.copyTo(filtered_);
     }
 
     void warpFiltered()
@@ -309,7 +309,9 @@ public:
 
         // Find anywhere we hit a white pixel in the warped image.
         // Essentially passing a 'curtain' up the image from the bottom.
-        for (int row = warped_.rows - 1; row > warped_.rows/2; row--)
+
+        int top_row = (2*warped_.rows) / 3;
+        for (int row = warped_.rows - 1; row > top_row; row--)
         {
             for (int current_col = start_col; current_col < end_col; current_col++)
             {
@@ -383,7 +385,7 @@ public:
                 //  or if this is the first nonzero value we've found at that index
                 //  then replace the scan range value for this corresponding angle.
                 if (scan.ranges[index] > ranges[i] || scan.ranges[i] == 0)
-                    scan.ranges[index] = (ranges[i] / 100.0) + 0.1;
+                    scan.ranges[index] = (ranges[i] / 100.0);
             }
         }
 

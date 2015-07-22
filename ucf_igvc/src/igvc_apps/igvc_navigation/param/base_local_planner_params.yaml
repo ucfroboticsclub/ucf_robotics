@@ -1,19 +1,19 @@
 TrajectoryPlannerROS:
     # Robot Configuration
-    max_vel_x: 2.0
+    max_vel_x: 2.2
     min_vel_x: 0.1
     max_vel_y: 0.0 # Diff drive
     min_vel_y: 0.0 # Diff drive
     max_vel_theta: 1.0
     min_vel_theta: -1.0
     # Needed to guarantee in place rotations overcome friction
-    min_in_place_vel_theta: 0.2
+    min_in_place_vel_theta: 0.4
     acc_lim_theta: 0.5
     acc_lim_x: 0.4
     acc_lim_y: 0
-    
-    yaw_goal_tolerance: 0.5
-    xy_goal_tolerance: 0.2
+
+    yaw_goal_tolerance: 3.0
+    xy_goal_tolerance: 1.0
     latch_xy_goal_tolerance: true # ONLY turn in place once we reach the xy goal
 
     # Path weight parameters
@@ -24,3 +24,5 @@ TrajectoryPlannerROS:
     dwa: false
 
     holonomic_robot: false
+
+    oscillation_reset_dist: 0.3

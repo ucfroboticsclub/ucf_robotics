@@ -3,5 +3,5 @@ global_costmap:
     robot_base_frame: base_footprint
     update_frequency: 5.0
     static_map: true
-    inflation_radius: 0.9  # Roughly the width of the robot footprint
+    inflation_radius: 0.75  # Roughly the width of the robot footprint
                            # Affects how close to objects global paths are generated

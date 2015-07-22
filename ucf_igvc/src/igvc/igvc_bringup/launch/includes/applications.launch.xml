@@ -8,13 +8,15 @@
     <include file="$(find igvc_vel_controller)/launch/nopid_example.launch"/>
     <include file="$(find igvc_encoders)/launch/igvc_encoders.launch"/>
     <include file="$(find igvc_navigation)/launch/move_base.launch"/>
+    <include file="$(find igvc_cmd_multiplexer)/launch/igvc_cmd_multiplexer.launch" />
+    <include file="$(find waypoint_manager)/launch/waypoint_manager.launch" />
     <!-- <include file="$(find igvc_localization)/launch/igvc_localization.launch"/> -->
 
     <!-- Front camera lane detection node. -->
     <include file="$(find lane_detection)/launch/lane_detection.launch">
         <arg name="identifier" value="front_lane_detector"/>
         <arg name="homography_file" value="$(find lane_detection)/config/front_homography.xml"/>
-        <arg name="configuration_file" value="$(find lane_detection)/config/left_configuration.xml"/>
+        <arg name="configuration_file" value="$(find lane_detection)/config/front_configuration.xml"/>
         <arg name="source_image_topic" value="/camera_front/image_raw"/>
         <arg name="fake_scan_frame_id" value="front_fake_laser"/>
         <arg name="fake_scan_topic" value="front_fake_scan"/>

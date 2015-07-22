@@ -24,8 +24,8 @@ class Idle(smach.State):
         smach.State.__init__(self, outcomes=['succeeded'])
 
     def execute(self, userdata):
-    	rospy.wait_for_service('autonomous_mode')
-    	rospy.loginfo("Entering autonomous mode")
+        rospy.wait_for_service('autonomous_mode')
+        rospy.loginfo("Entering autonomous mode")
         rospy.wait_for_service('advance_waypoint')
         rospy.wait_for_service('backtrack_waypoint')
         rospy.wait_for_service('next_waypoint')
@@ -54,7 +54,7 @@ class MovingToWaypoint(smach.State):
 
     def execute(self, userdata):
         move_base_client = SimpleActionClient('move_base', MoveBaseAction)
-        #move_base_client.wait_for_server(rospy.Duration(5))
+        move_base_client.wait_for_server(rospy.Duration(5))
         goal_pose = MoveBaseGoal()
         goal_pose.target_pose.header.frame_id = 'utm'
         goal_pose.target_pose.header.stamp = rospy.Time.now()
@@ -63,13 +63,16 @@ class MovingToWaypoint(smach.State):
         utm_waypoint = utm.fromLatLong(userdata.waypoint_in.position.x, userdata.waypoint_in.position.y, 250)
         goal_pose.target_pose.pose.position.x = utm_waypoint.easting
         goal_pose.target_pose.pose.position.y = utm_waypoint.northing
-        goal_pose.target_pose.pose.position.z = 0
+        goal_pose.target_pose.pose.position.z = 246
         goal_pose.target_pose.pose.orientation.x = 0
         goal_pose.target_pose.pose.orientation.y = 0
         goal_pose.target_pose.pose.orientation.z = 0
         goal_pose.target_pose.pose.orientation.w = 1
 
+        rospy.loginfo(goal_pose)
+        
         move_base_client.send_goal(goal_pose)
+        rospy.loginfo("Sent goal")
         move_base_client.wait_for_result()
         result = move_base_client.get_state()
         if (result == GoalStatus.SUCCEEDED):
@@ -98,18 +101,17 @@ class BacktrackWaypoint(smach.State):
         return 'succeeded'
 
 def serviceHandler():
-	return
+    return
 
 def flagCallback(data):
-	vehicle_state = data.autonomous_state
-	if vehicle_state:
-		try:
-			# Start a ROS service to signal we have received true for autonomous mode
-			# Really really goofy but no spinonce in rospy
-			server = rospy.Service("autonomous_mode", Empty, serviceHandler)
-			rospy.loginfo("Creating autonomous_mode service")
-		except rospy.ServiceException, e:
-			return
+    vehicle_state = data.autonomous_state
+    if vehicle_state:
+        try:
+            # Start a ROS service to signal we have received true for autonomous mode
+            # Really really goofy but no spinonce in rospy
+            server = rospy.Service("autonomous_mode", Empty, serviceHandler)
+        except rospy.ServiceException, e:
+            return
 
 def main():
     rospy.init_node('test_state_machine')
